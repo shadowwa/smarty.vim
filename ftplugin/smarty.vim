@@ -1,0 +1,9 @@
+" based on html.vim, with an additional group for smarty tags ("{foo}")
+if exists("loaded_matchit")
+	let b:match_ignorecase = 1
+	let b:match_words = '<:>,' .
+	\ '<\@<=[ou]l\>[^>]*\%(>\|$\):<\@<=li\>:<\@<=/[ou]l>,' .
+	\ '<\@<=dl\>[^>]*\%(>\|$\):<\@<=d[td]\>:<\@<=/dl>,' .
+	\ '<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>,' .
+	\ '{\@<=\([^/][^ \t}]*\)[^}]*\%(}\|$\):{\@<=/\1}'
+endif
