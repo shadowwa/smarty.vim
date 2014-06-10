@@ -1,9 +1,15 @@
-" based on html.vim, with an additional group for smarty tags ("{foo}")
+if exists("b:did_ftplugin") | finish | endif
+
+" Use HTML template ftplugins.
+runtime! ftplugin/html.vim
+
+" Append to b:match_words to match smarty tags ("{foo}..{/foo}")
 if exists("loaded_matchit")
-	let b:match_ignorecase = 1
-	let b:match_words = '<:>,' .
-	\ '<\@<=[ou]l\>[^>]*\%(>\|$\):<\@<=li\>:<\@<=/[ou]l>,' .
-	\ '<\@<=dl\>[^>]*\%(>\|$\):<\@<=d[td]\>:<\@<=/dl>,' .
-	\ '<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>,' .
-	\ '{\@<=\([^/][^ \t}]*\)[^}]*\%(}\|$\):{\@<=/\1}'
+	if exists("b:match_words")
+		let b:match_words .= ','
+	else
+		let b:match_words = ''
+	endif
+	let b:match_words .= '{\@<=\([^/][^ \t}]*\)[^}]*\%(}\|$\):{\@<=/\1}'
+	let b:match_words .= ',{:},\[:\],(:)'
 endif
