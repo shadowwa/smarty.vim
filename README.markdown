@@ -15,6 +15,8 @@ The following (probably incomplete) list of enhancements are provided:
    (`{foo}` .. `{/foo}`), and based on the html setup.
  * line endings have been converted to unix fileformat (to prevent
    parse errors on Linux/Mac).
+ * Smarter indenting, handling PHP blocks and delegating to HTML (includes
+   JavaScript).
 
 ## About Smarty
 [Smarty](http://www.smarty.net/) is a PHP template language.
