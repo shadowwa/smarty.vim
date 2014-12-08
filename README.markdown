@@ -1,4 +1,4 @@
-# Smarty syntax file for Vim
+# Smarty plugin for Vim (syntax, indent and filetype)
 
 This is a fork of [Vim Script #1798](http://www.vim.org/scripts/script.php?script_id=1798)
 (see the original README below).
