@@ -1,4 +1,6 @@
-# Smarty plugin for Vim (syntax, indent and filetype)
+# Smarty plugin for Vim
+
+This plugin provides syntax highlighting, indenting and general filetype settings for the Smarty templating language.
 
 This is a fork of [Vim Script #1798](http://www.vim.org/scripts/script.php?script_id=1798)
 (see the original README below).
