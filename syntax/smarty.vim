@@ -223,8 +223,8 @@ syn match smartyGlue contained "\.\|\->"
 
 syn region smartyModifier  contained matchgroup=Statement start=+||\@!+      end=+\ze:\|\>+
 syn region smartyParameter contained matchgroup=Statement start=+:+          end=+\ze\(}\||\)+ contains=smartyVariable, smartyDollarSign, smartyGlue, smartyInBracket, smartyStringDouble contained
-syn region smartyZone                matchgroup=Statement start="{\s\{-}[a-z$]\@=" end="}" contains=smartyParameter, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyBlock, smartyTagName, smartyConstant, smartyInFunc, @smartyTags, smartyRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyTodo
-syn region smartyEndTag   matchgroup=Statement start="{/"  end="}"  contains=@smartyTags
+syn region smartyStartTag start="{\s\{-}[a-z$]\@=" end="}" contains=smartyParameter, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyBlock, smartyTagName, smartyConstant, smartyInFunc, @smartyTags, smartyRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyTodo
+syn region smartyEndTag start="{/"  end="}"  contains=@smartyTags
 syn region smartyComment  matchgroup=Comment   start="{\*" end="\*}" contains=smartyTodo
 
 syn keyword smartyTodo   contained FIXME NOTE TODO OPTIMIZE XXX

@@ -17,9 +17,9 @@ let s:pairs = {
       \ }
 
 for ft in keys(s:pairs)
-    silent! unlet b:did_indent
-    exec 'runtime indent/'.ft.'.vim'
-    let s:indentexprs[ft] = &l:indentexpr
+  silent! unlet b:did_indent
+  exec 'runtime indent/'.ft.'.vim'
+  let s:indentexprs[ft] = &l:indentexpr
 endfor
 
 " Load html last so it can overwrite other settings.
@@ -49,14 +49,66 @@ function! s:handle(lnum, ft, searchpairargs)
   return ""
 endfun
 
+function! s:syn(lnum)
+  return synIDattr(synID(a:lnum,1+indent(a:lnum),1),'name')
+endfunction
+
 function! GetSmartyHtmlIndent(lnum)
+  let line  = getline(prevnonblank(a:lnum-1))
+  let cline = getline(a:lnum)
+  let nline = getline(nextnonblank(a:lnum+1))
+  let sw    = exists('*shiftwidth') ? shiftwidth() : shiftwidth()
+  let syn   = s:syn(prevnonblank(a:lnum-1))
+  let csyn  = s:syn(v:lnum)
+  let nsyn  = s:syn(nextnonblank(a:lnum+1))
+
+  if csyn == 'smartyStartTag'
+    if syn == 'smartyEndTag'
+      return indent(prevnonblank(v:lnum-1))
+    elseif syn != '' && syn != 'Delimiter'
+      return sw + indent(prevnonblank(v:lnum-1))
+    endif
+
+    return indent(prevnonblank(v:lnum-1))
+  elseif csyn == 'smartyEndTag'
+    if syn == 'smartyStartTag'
+      return indent(prevnonblank(v:lnum-1))
+    endif
+
+    return indent(prevnonblank(v:lnum-1)) - sw
+  elseif syn == 'smartyStarTag'
+    return sw + indent(prevnonblank(v:lnum-1))
+  elseif syn == 'smartyEndTag'
+    return indent(prevnonblank(v:lnum-1))
+  endif
+
   for [ft, args] in items(s:pairs)
-    let r = call('s:handle', [a:lnum, ft, args])
-    if type(r) == type(0)
+    let indent = call('s:handle', [a:lnum, ft, args])
+    if type(indent) == type(0)
       if g:smarty_indent_verbose
-        echom "Line ".a:lnum.": using ".ft." indenting via ".s:indentexprs[ft].": ".r."."
+        echom "Line ".a:lnum.": using ".ft." indenting via ".s:indentexprs[ft].": ".indent."."
       endif
-      return r
+
+      " Handle {php} in current line
+      if cline =~ '\s*{php}\s*'
+        return sw + indent(prevnonblank(v:lnum-1))
+      endif
+
+      " Handle {/php} in current line
+      if cline =~ '\s*{/php}\s*'
+        if line =~ '\s*{php}\s*'
+          return indent(prevnonblank(v:lnum-1))
+        else
+          return indent(prevnonblank(v:lnum-1)) - sw
+        endif
+      endif
+
+      " Indent line if previous line is {php}
+      if line =~ '\s*{php}\s*'
+        return sw + indent(prevnonblank(v:lnum-1))
+      endif
+
+      return indent
     endif
   endfor
 
@@ -64,5 +116,13 @@ function! GetSmartyHtmlIndent(lnum)
   if g:smarty_indent_verbose
     echom "Line ".a:lnum.": using HTML indenting via ".s:indentexprs['html']."."
   endif
-  exec 'return ' s:indentexprs['html']
+
+  let indent = call(substitute(s:indentexprs['html'], '(\|)', '', 'g'), [])
+
+  " Indent if previous line is a Smarty start tag
+  if syn == 'smartyStartTag'
+    return sw + indent
+  endif
+
+  return indent
 endfunction
