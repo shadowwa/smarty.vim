@@ -71,7 +71,7 @@ function! GetSmartyHtmlIndent(lnum)
           endif
 
           return indent(prevnonblank(v:lnum-1))
-      elseif csyn == 'smartyEndTag'
+      elseif csyn == 'smartyEndTag' || csyn == 'smartyMiddleTag'
           if syn == 'smartyStartTag'
               return indent(prevnonblank(v:lnum-1))
           endif
@@ -121,7 +121,7 @@ function! GetSmartyHtmlIndent(lnum)
 
   if g:smarty_indent_block
       " Indent if previous line is a smartyStartTag but ignore inline tags
-      if syn == 'smartyStartTag' && !(line =~ '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
+      if (syn == 'smartyStartTag' || syn == 'smartyMiddleTag') && !(line =~ '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
         return sw + indent
       endif
   endif

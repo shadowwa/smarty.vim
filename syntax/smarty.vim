@@ -211,11 +211,12 @@ syn region smartyModifier     contained matchgroup=Statement start=+||\@!+ end=+
 syn region smartyParameter    contained matchgroup=Statement start=+:+     end=+\ze\(}\||\)+ contains=smartyVariable, smartyDollarSign, smartyGlue, smartyInBracket, smartyStringDouble contained
 
 syn region smartySimpleTag start="{\s\{-}[a-z$]\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartySTags, smartyConstant, smartySRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyTodo
-syn region smartyStartTag  start="{\s\{-}[a-z$]\@=\(append\|assign\|call\|capture\|config_load\|debug\|eval\|extends\|fetch\|html_checkboxes\|html_image\|html_options\|html_radios\|html_select_date\|html_select_time\|html_table\|include\|include_php\|insert\|mailto\|math\|ldelim\|rdelim\)\@!" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyDTags, smartyConstant, smartyDRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyConditional, smartyOperator
-syn region smartyEndTag    start="{/\(append\|assign\|call\|capture\|config_load\|debug\|eval\|extends\|fetch\|html_checkboxes\|html_image\|html_options\|html_radios\|html_select_date\|html_select_time\|html_table\|include\|include_php\|insert\|mailto\|math\|ldelim\|rdelim\)\@!"               end="}" contains=smartyDTags, smartyConditional, smartyDRepeat
+syn region smartyStartTag  start="{\(block\|for\|foreach\|function\|if\|literal\|nocache\|php\|section\|setfilter\|strip\|textformat\|while\)\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyDTags, smartyConstant, smartyDRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyConditional, smartyOperator
+syn region smartyMiddleTag start="{\(elseif\|else\|foreachelse\|sectionelse\)" end="}" contains=smartyConditional, smartyDRepeat
+syn region smartyEndTag    start="{/\(block\|for\|foreach\|function\|if\|literal\|nocache\|php\|section\|setfilter\|strip\|textformat\|while\)\@=" end="}" contains=smartyDTags, smartyConditional, smartyDRepeat
 syn region smartyComment   matchgroup=Comment  start="{\*" end="\*}" contains=smartyTodo
 
-syn cluster htmlPreproc add=smartyZone add=smartyComment add=smartyStartTag add=smartyEndTag
+syn cluster htmlPreproc add=smartyZone add=smartyComment add=smartySimpleTag add=smartyStartTag add=smartyMiddleTag add=smartyEndTag
 
 syn region htmlString   contained start=+"+ end=+"+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc
 syn region htmlString   contained start=+'+ end=+'+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc
