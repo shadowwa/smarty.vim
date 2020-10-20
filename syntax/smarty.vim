@@ -191,7 +191,7 @@ syn match smartyNumber "\<0x\x\{1,8}\>"  contained display
 syn keyword smartyBoolean contained true false
 
 " Operator
-syn match  smartyOperator contained  "||\|&&\|neq\|gte\|lte\|not\|mod\|ne\|eq\|gt\|lt\|ge\|le\|===\|==\|!=\|>\|<\|>=\|<=\|!\|%"
+syn match  smartyOperator contained  "||\|&&\| neq \| gte \| lte \| not \| mod \| ne \| eq \| gt \| lt \| ge \| le \|===\|==\|!=\|>\|<\|>=\|<=\|!\|%"
 syn match  smartyGlue     contained "\.\|\->"
 
 " Dollar
