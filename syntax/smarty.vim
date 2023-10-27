@@ -26,6 +26,7 @@ syn keyword smartyDTags       contained block for capture function literal nocac
 syn keyword smartyConditional contained if elseif else forelse
 syn keyword smartySRepeat     contained cycle counter
 syn keyword smartyDRepeat     contained foreach foreachelse section sectionelse while
+syn keyword smartyForeachConstruct contained break continue
 
 syn match smartyCProperty contained "[a-zA-Z0-9_]\+="
 syn match smartyProperty  contained "above="
@@ -236,7 +237,7 @@ syn region smartyStringDouble contained matchgroup=Constant start=+"+  end=+"+  
 syn region smartyModifier     contained matchgroup=Statement start=+||\@!+ end=+\ze:\|\>+
 syn region smartyParameter    contained matchgroup=Statement start=+:+     end=+\ze\(}\||\)+ contains=smartyVariable, smartyDollarSign, smartyGlue, smartyInBracket, smartyStringDouble contained
 
-syn region smartySimpleTag start="{\s\{-}[a-z$]\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartySTags, smartyConstant, smartySRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyTodo
+syn region smartySimpleTag start="{\s\{-}[a-z$]\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartySTags, smartyConstant, smartySRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyTodo, smartyForeachConstruct
 syn region smartyStartTag  start="{\(block\|capture\|elseif\|for\|foreach\|function\|if\|literal\|nocache\|php\|section\|setfilter\|strip\|textformat\|while\)\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyDTags, smartyConstant, smartyDRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyConditional, smartyOperator
 syn region smartyMiddleTag start="{\(else\|foreachelse\|forelse\|sectionelse\)\>" end="}" contains=smartyConditional, smartyDRepeat
 syn region smartyEndTag    start="{/\(block\|capture\|for\|foreach\|function\|if\|literal\|nocache\|php\|section\|setfilter\|strip\|textformat\|while\)\@=" end="}" contains=smartyDTags, smartyConditional, smartyDRepeat
@@ -260,6 +261,7 @@ if version >= 508 || !exists("did_smarty_syn_inits")
   HiLink smartyComment         Comment
   HiLink smartyConditional     Keyword
   HiLink smartyDRepeat         Keyword
+  HiLink smartyForeachConstruct Keyword
   HiLink smartyDTags           Keyword
   HiLink smartyDollarSign      Statement
   HiLink smartyGlue            Statement
