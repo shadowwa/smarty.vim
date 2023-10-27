@@ -207,6 +207,14 @@ syn match smartyProperty  contained "year_extra="
 syn match smartyProperty  contained "year_id="
 syn match smartyProperty  contained "year_size="
 
+syn match smartyForeachProperty contained "@first"
+syn match smartyForeachProperty contained "@index"
+syn match smartyForeachProperty contained "@iteration"
+syn match smartyForeachProperty contained "@key"
+syn match smartyForeachProperty contained "@last"
+syn match smartyForeachProperty contained "@show"
+syn match smartyForeachProperty contained "@total"
+
 syn match   smartyConstant contained "\$smarty"
 syn keyword smartyTodo     contained FIXME NOTE TODO OPTIMIZE XXX
 
@@ -226,7 +234,7 @@ syn match smartyDollarSign      contained "\$" " nextgroup=smartyVariable
 syn match smartyMaybeDollarSign contained "\([^\\]\|\\\\\)\@<=\$"
 
 " Variable
-syn match smartyVariable        contained "\$\@<=\(\h\w\{-}\(\.\|\->\|\[\w\{-}\]\(\.\|\->\)\)\)*\w*" contains=smartyGlue nextgroup=smartyFunctionArgs
+syn match smartyVariable        contained "\$\@<=\(\h\w\{-}\(\.\|\->\|\[\w\{-}\]\(\.\|\->\)\)\)*\w*" contains=smartyGlue nextgroup=smartyForeachProperty
 syn match smartyMaybeVariable   contained "\(\(^\|[^\\]\|\\\\\)\$\)\@<=\h\w*"
 syn match smartyEscapedVariable contained "\\$\h\w*"
 
@@ -261,9 +269,10 @@ if version >= 508 || !exists("did_smarty_syn_inits")
   HiLink smartyComment         Comment
   HiLink smartyConditional     Keyword
   HiLink smartyDRepeat         Keyword
-  HiLink smartyForeachConstruct Keyword
   HiLink smartyDTags           Keyword
   HiLink smartyDollarSign      Statement
+  HiLink smartyForeachConstruct Keyword
+  HiLink smartyForeachProperty Keyword
   HiLink smartyGlue            Statement
   HiLink smartyInBacktick      Statement
   HiLink smartyInBracket       PreProc
