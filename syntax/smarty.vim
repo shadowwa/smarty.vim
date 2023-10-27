@@ -23,7 +23,7 @@ unlet b:current_syntax
 
 syn keyword smartySTags       contained append assign call capture config_load debug eval extends fetch html_checkboxes html_image html_options html_radios html_select_date html_select_time html_table include include_php insert mailto math ldelim rdelim
 syn keyword smartyDTags       contained block for function literal nocache php setfilter strip textformat
-syn keyword smartyConditional contained if elseif else
+syn keyword smartyConditional contained if elseif else forelse
 syn keyword smartySRepeat     contained cycle counter
 syn keyword smartyDRepeat     contained foreach foreachelse section sectionelse while
 
@@ -212,7 +212,7 @@ syn region smartyParameter    contained matchgroup=Statement start=+:+     end=+
 
 syn region smartySimpleTag start="{\s\{-}[a-z$]\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartySTags, smartyConstant, smartySRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyTodo
 syn region smartyStartTag  start="{\(block\|elseif\|for\|foreach\|function\|if\|literal\|nocache\|php\|section\|setfilter\|strip\|textformat\|while\)\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyDTags, smartyConstant, smartyDRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyConditional, smartyOperator
-syn region smartyMiddleTag start="{\(else\|foreachelse\|sectionelse\)\>" end="}" contains=smartyConditional, smartyDRepeat
+syn region smartyMiddleTag start="{\(else\|foreachelse\|forelse\|sectionelse\)\>" end="}" contains=smartyConditional, smartyDRepeat
 syn region smartyEndTag    start="{/\(block\|for\|foreach\|function\|if\|literal\|nocache\|php\|section\|setfilter\|strip\|textformat\|while\)\@=" end="}" contains=smartyDTags, smartyConditional, smartyDRepeat
 syn region smartyComment   matchgroup=Comment  start="{\*" end="\*}" contains=smartyTodo
 
