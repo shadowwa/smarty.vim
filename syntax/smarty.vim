@@ -250,7 +250,7 @@ syn region smartyInBacktick   contained matchgroup=Constant start=+\`+ end=+\`+ 
 syn region smartyString       contained matchgroup=Constant start=+'+  end=+'+  contains=smartyMaybeVariable, smartyInBacktick, smartyMaybeDollarSign keepend
 syn region smartyStringDouble contained matchgroup=Constant start=+"+  end=+"+  contains=smartyMaybeVariable, smartyInBacktick, smartyMaybeDollarSign keepend
 syn region smartyModifier     contained matchgroup=Statement start=+||\@!+ end=+\ze:\|\>+
-syn region smartyParameter    contained matchgroup=Statement start=+:+     end=+\ze\(}\||\)+ contains=smartyVariable, smartyDollarSign, smartyGlue, smartyInBracket, smartyStringDouble contained
+syn region smartyParameter    contained matchgroup=Statement start=+:+     end=+\ze\(}\||\)+ contains=smartyVariable, smartyDollarSign, smartyGlue, smartyInBracket, smartyString, smartyStringDouble contained
 
 syn region smartySimpleTag start="{\s\{-}[a-z$'"#]\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyHashSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartySTags, smartyConstant, smartySRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyTodo, smartyForeachConstruct
 syn region smartyStartTag  start="{\(block\|capture\|elseif\|for\|foreach\|function\|if\|literal\|nocache\|php\|section\|setfilter\|strip\|textformat\|while\)\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyHashSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyDTags, smartyConstant, smartyDRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyConditional, smartyOperator
