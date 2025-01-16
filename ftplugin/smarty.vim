@@ -10,6 +10,10 @@ if exists("loaded_matchit")
 	else
 		let b:match_words = ''
 	endif
+	let b:match_words .= '{\@<=if:{\@<=elseif:{\@<=else}:{\@<=/if},'
+	let b:match_words .= '{\@<=foreach :{\@<=foreachelse}:{\@<=break}:{\@<=continue}:{\@<=/foreach},'
+	let b:match_words .= '{\@<=for :{\@<=forelse}:{\@<=/for},'
+	let b:match_words .= '{\@<=section :{\@<=sectionelse:{\@<=/section},'
 	let b:match_words .= '{\@<=\([^/][^ \t}]*\)[^}]*\%(}\|$\):{\@<=/\1}'
 	let b:match_words .= ',{:},\[:\],(:)'
 endif
