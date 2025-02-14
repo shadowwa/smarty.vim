@@ -1,0 +1,73 @@
+*smarty.txt*                                                Syntax highlighting
+
+This plugin provides syntax highlighting, indenting and general filetype
+settings for the Smarty templating language.
+https://smarty-php.github.io/.
+
+The following (probably incomplete) list of enhancements are provided:
+
+ * Various improvements throughout the syntax handling.
+ * `{php}…{/php}` blocks are delegated to PHP syntax.
+ * `filetype` is set to "smarty" for `*.tpl` files.
+ * syntax is based on HTML filetype.
+ * matchit (jumping between tags via `%`) is configured for Smarty tags
+   (`{foo}` .. `{/foo}`), and based on the html setup.
+ * line endings have been converted to unix fileformat (to prevent parse
+   errors on Linux/Mac).
+ * Smarter indenting, handling PHP blocks and delegating to HTML (includes
+   JavaScript).
+
+==============================================================================
+VARIABLES                                                    *smarty-variables*
+
+Put these variables into your vimrc. The provided examples also indicate the
+default values, as long as no "Default:" section is given.
+
+    |g:smarty_indent_block|
+    |g:smarty_indent_verbose|
+
+------------------------------------------------------------------------------
+                                                        *g:smarty_indent_block*
+When this variable is set, the indentation is done on html tags and smarty
+tags otherwise smarty tags are not indented
+
+>vim
+    let g:smarty_indent_block = 1
+<
+>smarty
+ <div>
+     <span>
+         {if $test}
+             {$variable}
+         {/if}
+     </span>
+ </div>
+<
+
+>vim
+    let g:smarty_indent_block = 0
+<
+>smarty
+ <div>
+     <span>
+         {if $test}
+         {$variable}
+         {/if}
+     </span>
+ </div>
+<
+------------------------------------------------------------------------------
+                                                      *g:smarty_indent_verbose*
+>vim
+    let g:smarty_indent_verbose = 1
+<
+Verbose mode for debugging
+
+==============================================================================
+ABOUT                                                            *smarty-about*
+
+Grab the latest version or report a bug on GitHub:
+
+https://github.com/shadowwa/smarty.vim
+
+ vim:tw=78:et:ft=help:norl:
