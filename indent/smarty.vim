@@ -66,13 +66,17 @@ function! GetSmartyHtmlIndent(lnum)
       let sw = exists('*shiftwidth') ? shiftwidth() : shiftwidth()
 
       if csyn == 'smartyStartTag'
-          if syn == 'htmlTag' || syn == 'smartyStartTag'
+          if syn == 'htmlTag'
+              let indent = call(substitute(s:indentexprs['html'], '(\|)', '', 'g'), [])
+              return indent
+          endif
+          if (syn == 'smartyStartTag' || syn == 'smartyMiddleTag') && !(line =~ '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
               return sw + indent(prevnonblank(v:lnum-1))
           endif
 
           return indent(prevnonblank(v:lnum-1))
       elseif csyn == 'smartyEndTag' || csyn == 'smartyMiddleTag'
-          if syn == 'smartyStartTag'
+          if syn == 'smartyStartTag' && !(line =~ '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
               return indent(prevnonblank(v:lnum-1))
           endif
 
