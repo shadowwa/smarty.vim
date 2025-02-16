@@ -259,7 +259,7 @@ syn region smartyMiddleTag start="{\(else\|foreachelse\|forelse\|sectionelse\)\>
 syn region smartyEndTag    start="{/\(block\|capture\|for\|foreach\|function\|if\|literal\|nocache\|php\|section\|setfilter\|strip\|textformat\|while\)\@=" end="}" contains=smartyDTags, smartyConditional, smartyDRepeat
 syn region smartyComment   matchgroup=Comment  start="{\*" end="\*}" contains=smartyTodo
 
-syn cluster htmlPreproc add=smartyZone add=smartyComment add=smartySimpleTag add=smartyStartTag add=smartyMiddleTag add=smartyEndTag
+syn cluster htmlPreproc add=smartyComment add=smartySimpleTag add=smartyStartTag add=smartyMiddleTag add=smartyEndTag
 
 syn region htmlString   contained start=+"+ end=+"+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc
 syn region htmlString   contained start=+'+ end=+'+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc
