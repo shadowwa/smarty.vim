@@ -7,10 +7,10 @@
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
-if !exists("main_syntax")
-  if version < 600
+if !exists('main_syntax')
+  if v:version < 600
     syntax clear
-  elseif exists("b:current_syntax")
+  elseif exists('b:current_syntax')
   finish
 endif
   let main_syntax = 'smarty'
@@ -264,8 +264,8 @@ syn cluster htmlPreproc add=smartyComment add=smartySimpleTag add=smartyStartTag
 syn region htmlString   contained start=+"+ end=+"+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc
 syn region htmlString   contained start=+'+ end=+'+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc
 
-if version >= 508 || !exists("did_smarty_syn_inits")
-  if version < 508
+if v:version >= 508 || !exists('did_smarty_syn_inits')
+  if v:version < 508
     let did_smarty_syn_inits = 1
     command -nargs=+ HiLink hi link <args>
   else
@@ -307,9 +307,9 @@ endif
 syn include syntax/php.vim
 syn region   phpRegion  matchgroup=Delimiter start="{php}" end="{/php}" contains=@phpClTop
 
-let b:current_syntax = "smarty"
+let b:current_syntax = 'smarty'
 
-if main_syntax == 'smarty'
+if main_syntax ==# 'smarty'
   unlet main_syntax
 endif
 
