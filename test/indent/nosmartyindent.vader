@@ -1,0 +1,44 @@
+Execute (setup indent configuration):
+  set expandtab
+  set shiftwidth=4
+  set tabstop=4
+  set softtabstop=4
+  let g:smarty_indent_block=0
+
+Given smarty (indented smarty template):
+  {if $test}
+      black
+  {elseif $test2}
+      white
+  {/if}
+
+Do (Indent the whole buffer without smarty indent option):
+  gg=G
+
+Expect smarty (non indented result):
+  {if $test}
+  black
+  {elseif $test2}
+  white
+  {/if}
+
+############################################
+
+Given smarty (non indented html content):
+  <div>
+  <span>
+  black
+  </span>
+  </div>
+
+Do (indented html content):
+  gg=G
+
+Expect smarty (non indented result):
+  <div>
+      <span>
+          black
+      </span>
+  </div>
+
+############################################
