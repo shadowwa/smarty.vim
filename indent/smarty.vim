@@ -50,7 +50,8 @@ function! s:handle(lnum, ft, searchpairargs)
 endfun
 
 function! s:syn(lnum)
-  return synIDattr(synID(a:lnum,1+indent(a:lnum),1),'name')
+  let nonemptycol=match(getline(a:lnum), '\S')+1
+  return synIDattr(synID(a:lnum,nonemptycol,1),'name')
 endfunction
 
 function! GetSmartyHtmlIndent(lnum)

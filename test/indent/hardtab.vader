@@ -1,4 +1,4 @@
-Execute (setup indent configuration):
+Execute (setup hardtab indent configuration):
   set noexpandtab
   set shiftwidth=4
   set tabstop=4
@@ -24,7 +24,34 @@ Expect smarty (hardtab indented result):
 
 ############################################
 
-Execute (setup indent configuration):
+Given smarty (softtab indented result):
+  <div>
+      <span>
+          {if $test}
+              black
+          {elseif $test2}
+              white
+          {/if}
+      </span>
+  </div>
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (hardtab indented smarty template):
+  <div>
+  	<span>
+  		{if $test}
+  			black
+  		{elseif $test2}
+  			white
+  		{/if}
+  	</span>
+  </div>
+
+############################################
+
+Execute (setup softtab indent configuration):
   set expandtab
 
 Given smarty (hardtab indented smarty template):
@@ -51,3 +78,4 @@ Expect smarty (softtab indented result):
           {/if}
       </span>
   </div>
+
