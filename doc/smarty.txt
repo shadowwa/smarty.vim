@@ -16,6 +16,9 @@ The following (probably incomplete) list of enhancements are provided:
    errors on Linux/Mac).
  * Smarter indenting, handling PHP blocks and delegating to HTML (includes
    JavaScript).
+ * Syntax updated to Smarty5
+ * add doc for variable configuration
+ * unit tests
 
 ==============================================================================
 VARIABLES                                                    *smarty-variables*

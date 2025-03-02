@@ -1,12 +1,15 @@
 " Vim syntax file
-" Language:	Smarty Templates
-" Maintainer:	Daniel Hahler, original: Manfred Stienstra manfred.stienstra@dwerg.net
-" Last Change:  Di 10 Jun 2014 15:09:10 CEST
-" Filenames:    *.tpl
-" URL:		https://github.com/blueyed/smarty.vim
+" Language:             Smarty Templates
+" Maintainer:           Shad
+" Previous Maintainer:  Diego Blanco
+" Previous Maintainer:  Daniel Hahler
+" Original Maintainer:  Manfred Stienstra manfred.stienstra@dwerg.net
+" Last Change:          Sun Mar  2 17:00:39 CET 2025
+" Filenames:            *.tpl
+" URL:                  https://github.com/shadowwa/smarty.vim
 
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
+" For vim version 5.x: Clear all syntax items
+" For vim version 6.x: Quit when a syntax file was already loaded
 if !exists('main_syntax')
   if v:version < 600
     syntax clear
