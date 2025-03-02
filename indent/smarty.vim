@@ -74,7 +74,7 @@ function! GetSmartyHtmlIndent(lnum)
           endif
       endif
       if csyn ==# 'smartyStartTag'
-          if syn ==# 'htmlTag'
+          if syn ==# 'htmlTag' || syn ==# 'htmlScriptTag'
               let indent = call(substitute(s:indentexprs['html'], '(\|)', '', 'g'), [])
               return indent
           endif

@@ -1,0 +1,63 @@
+Execute (setup indent configuration):
+  set expandtab
+  set shiftwidth=4
+  set tabstop=4
+  set softtabstop=4
+  let g:smarty_indent_block=1
+  let g:html_indent_script1 = 'inc'
+
+Given smarty (indented smarty in <script> tag template):
+  <script>
+      jsbefore()
+      {if $smartycondition1}
+          jsvar1={$smartyvar1}
+      {elseif $smartycondition2}
+          jsvar2={$smartyvar2}
+      {else}
+          jsvar3={$smartyvar3}
+      {/if}
+      jsafter()
+  </script>
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (indented smarty in <script> tag result):
+  <script>
+      jsbefore()
+      {if $smartycondition1}
+          jsvar1={$smartyvar1}
+      {elseif $smartycondition2}
+          jsvar2={$smartyvar2}
+      {else}
+          jsvar3={$smartyvar3}
+      {/if}
+      jsafter()
+  </script>
+
+############################################
+
+Given smarty (indented smarty in <script> tag template):
+  <script>
+      {if $smartycondition1}
+          jsvar1={$smartyvar1}
+      {elseif $smartycondition2}
+          jsvar2={$smartyvar2}
+      {else}
+          jsvar3={$smartyvar3}
+      {/if}
+  </script>
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (indented smarty in <script> tag result):
+  <script>
+      {if $smartycondition1}
+          jsvar1={$smartyvar1}
+      {elseif $smartycondition2}
+          jsvar2={$smartyvar2}
+      {else}
+          jsvar3={$smartyvar3}
+      {/if}
+  </script>
