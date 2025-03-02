@@ -66,6 +66,13 @@ function! GetSmartyHtmlIndent(lnum)
   if g:smarty_indent_block
       let sw = exists('*shiftwidth') ? shiftwidth() : shiftwidth()
 
+      if csyn ==# 'smartyStartTag' || csyn ==# 'smartyMiddleTag'
+          call cursor(a:lnum, match(getline(a:lnum), '\S')+1)
+          let pairline = searchpair('{', '', '}', 'bW')
+          if pairline > 0
+              return sw + indent(pairline)
+          endif
+      endif
       if csyn ==# 'smartyStartTag'
           if syn ==# 'htmlTag'
               let indent = call(substitute(s:indentexprs['html'], '(\|)', '', 'g'), [])
@@ -125,6 +132,13 @@ function! GetSmartyHtmlIndent(lnum)
   let indent = call(substitute(s:indentexprs['html'], '(\|)', '', 'g'), [])
 
   if g:smarty_indent_block
+      if syn ==# 'smartyStartTag' || syn ==# 'smartyMiddleTag'
+          call cursor(a:lnum -1, col('$'))
+          let pairline = searchpair('{', '', '}', 'bW')
+          if pairline > 0
+              return sw + indent(pairline)
+          endif
+      endif
       " Indent if previous line is a smartyStartTag but ignore inline tags
       if (syn ==# 'smartyStartTag' || syn ==# 'smartyMiddleTag') && !(line =~? '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
         return sw + indent

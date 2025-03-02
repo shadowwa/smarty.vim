@@ -1,0 +1,329 @@
+Execute (setup indent configuration):
+  set expandtab
+  set shiftwidth=4
+  set tabstop=4
+  set softtabstop=4
+  let g:smarty_indent_block=1
+
+Given smarty (non indented smarty template):
+  {if $test}
+  black
+  {elseif $test2}
+  white
+  {/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (very basic indentation result):
+  {if $test}
+      black
+  {elseif $test2}
+      white
+  {/if}
+
+############################################
+
+Given smarty (non indented smarty template):
+  {if $test}
+  {if $test}
+  black
+  {/if}
+  {else}
+  {if $test}
+  white
+  {/if}
+  {/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (two levels elsif indentation result):
+  {if $test}
+      {if $test}
+          black
+      {/if}
+  {else}
+      {if $test}
+          white
+      {/if}
+  {/if}
+
+############################################
+
+Given smarty (non indented smarty template):
+  {if $test}
+  {if $test}
+  black
+  {/if}
+  {elseif $test2}
+  {if $test}
+  white
+  {/if}
+  {/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (two levels elsif indentation result):
+  {if $test}
+      {if $test}
+          black
+      {/if}
+  {elseif $test2}
+      {if $test}
+          white
+      {/if}
+  {/if}
+
+############################################
+
+Given smarty (non indented smarty template):
+  {if $test}bla{/if}
+   {if $test}bla{/if}
+    {if $test}bla{/if}
+     {if $test}bla{/if}
+    {if $test}bla{/if}
+    {if $test}bla{/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (several oneline tags alone):
+  {if $test}bla{/if}
+  {if $test}bla{/if}
+  {if $test}bla{/if}
+  {if $test}bla{/if}
+  {if $test}bla{/if}
+  {if $test}bla{/if}
+
+############################################
+
+Given smarty (non indented smarty template):
+  bla {if $test}bla{/if} bla
+    bla {if $test}bla{/if} bla
+   bla {if $test}bla{/if} bla
+     bla {if $test}bla{/if} bla
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (several oneline tags with text before and after):
+  bla {if $test}bla{/if} bla
+  bla {if $test}bla{/if} bla
+  bla {if $test}bla{/if} bla
+  bla {if $test}bla{/if} bla
+
+############################################
+
+Given smarty (non indented smarty template):
+  {if $test2}
+     {if $test}bla{/if}
+   {else}
+    {if $test}bla{/if}
+      {if $test}bla{/if}
+  {/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (several oneline tags alone and nested):
+  {if $test2}
+      {if $test}bla{/if}
+  {else}
+      {if $test}bla{/if}
+      {if $test}bla{/if}
+  {/if}
+
+############################################
+# multiline tags
+
+Given smarty (non indented smarty template):
+  {if $test1 }
+      <div>
+          <span>
+              simple
+          </span>
+      </div>
+  {/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (onleline starting tag + html):
+  {if $test1 }
+      <div>
+          <span>
+              simple
+          </span>
+      </div>
+  {/if}
+
+############################################
+
+Given smarty (non indented smarty template):
+  {if
+      $test1
+      }
+      <div>
+          <span>
+              multi 1 condition
+          </span>
+      </div>
+  {/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (multiline starting tag one condition):
+  {if
+      $test1
+      }
+      <div>
+          <span>
+              multi 1 condition
+          </span>
+      </div>
+  {/if}
+
+############################################
+
+Given smarty (non indented smarty template):
+  {if $test1 &&
+      $test2 ||
+      $test3}
+      <div>
+          <span>
+              multi several conditions
+          </span>
+      </div>
+  {/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (multiline starting tag several simple conditions):
+  {if $test1 &&
+      $test2 ||
+      $test3}
+      <div>
+          <span>
+              multi several conditions
+          </span>
+      </div>
+  {/if}
+
+############################################
+
+Given smarty (non indented smarty template):
+  {if $test1 &&
+      $test2 ||
+      $test3
+      }
+      <div>
+          <span>
+              multi several conditions
+          </span>
+      </div>
+  {/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (multiline starting tag several simple conditions end bracket alone):
+  {if $test1 &&
+      $test2 ||
+      $test3
+      }
+      <div>
+          <span>
+              multi several conditions
+          </span>
+      </div>
+  {/if}
+
+############################################
+
+Given smarty (non indented smarty template):
+  {if {plugin $test1} &&
+      {$test2} ||
+      {$test3}}
+      <div>
+          <span>
+              multi several conditions and nested
+          </span>
+      </div>
+  {/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (multiline starting tag several conditions inside nested tags):
+  {if {plugin $test1} &&
+      {$test2} ||
+      {$test3}}
+      <div>
+          <span>
+              multi several conditions and nested
+          </span>
+      </div>
+  {/if}
+
+############################################
+
+Given smarty (non indented smarty template):
+  {if
+      {$test1} &&
+      {$test2} ||
+      {$test3}}
+      <div>
+          <span>
+              multi several conditions and nested
+          </span>
+      </div>
+  {/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (multiline starting tag several conditions inside nested tags bracket and if on separate tag):
+  {if
+      {$test1} &&
+      {$test2} ||
+      {$test3}}
+      <div>
+          <span>
+              multi several conditions and nested
+          </span>
+      </div>
+  {/if}
+
+############################################
+
+Given smarty (non indented smarty template):
+  {if
+      ($test1) &&
+      ($test2) ||
+      ($test3)}
+      <div>
+          <span>
+              multi several conditions with parentheses
+          </span>
+      </div>
+  {/if}
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (multiline starting tag several conditions with parentheses):
+  {if
+      ($test1) &&
+      ($test2) ||
+      ($test3)}
+      <div>
+          <span>
+              multi several conditions with parentheses
+          </span>
+      </div>
+  {/if}
+
+############################################
