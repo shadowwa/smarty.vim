@@ -19,7 +19,8 @@ Given smarty (indented smarty in <script> tag template):
       jsafter()
   </script>
 
-Do (Indent the whole buffer):
+# does not work in vim 8, maybe bug in syntax/html.vim
+Do (TODO: Indent the whole buffer):
   gg=G
 
 Expect smarty (indented smarty in <script> tag result):
