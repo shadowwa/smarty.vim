@@ -260,7 +260,7 @@ syn region smartyStartTag  start="{\(block\|capture\|for\|foreach\|function\|if\
 syn region smartyMiddleTag start="{\(elseif\)\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyHashSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyDTags, smartyConstant, smartyDRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyConditional, smartyOperator containedin=@htmlJavaScript
 syn region smartyMiddleTag start="{\(else\|foreachelse\|forelse\|sectionelse\)\>" end="}" contains=smartyConditional, smartyDRepeat containedin=@htmlJavaScript
 syn region smartyEndTag    start="{/\(block\|capture\|for\|foreach\|function\|if\|literal\|nocache\|php\|section\|setfilter\|strip\|textformat\|while\)\@=" end="}" contains=smartyDTags, smartyConditional, smartyDRepeat containedin=@htmlJavaScript
-syn region smartyComment   matchgroup=Comment  start="{\*" end="\*}" contains=smartyTodo containedin=htmlString
+syn region smartyComment   matchgroup=Comment  start="{\*" end="\*}" contains=smartyTodo containedin=htmlString,@htmlJavaScript
 
 syn cluster htmlPreproc add=smartySimpleTag add=smartyStartTag add=smartyMiddleTag add=smartyEndTag
 
