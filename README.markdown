@@ -109,6 +109,21 @@ folder.
 
 [Pull requests](https://github.com/shadowwa/smarty.vim) are welcome, of course.
 
+## Additional useful plugins
+
+* [vim-textobj-smarty](https://github.com/kana/vim-textobj-smarty/) add textobj
+  for smarty, allowing to work on loop and conditional code with `*ak` and on
+  content only with `*ik` ([vim-textobj-user](https://github.com/kana/vim-textobj-user)
+  is also required)
+* [vim-snippets](https://github.com/honza/vim-snippets) is a library of
+  snippets for multiple languages, including Smarty. Works with:
+  * [snipmate](https://github.com/garbas/vim-snipmate),
+  * [ultisnips](https://github.com/SirVer/ultisnips) or
+  * [coc-snippets](https://github.com/neoclide/coc-snippets) if you are using [coc](https://github.com/neoclide/coc.nvim)
+* [coc-smarty](https://github.com/shadowwa/coc-smarty) is an extension for [coc](https://github.com/neoclide/coc.nvim),
+  a test of using [coc-html](https://github.com/neoclide/coc-html) with code
+  from [vscode-smarty](https://github.com/ssigwart/vscode-smarty)
+
 ## Original README
 
 This is a mirror of <http://www.vim.org/scripts/script.php?script_id=1798>
