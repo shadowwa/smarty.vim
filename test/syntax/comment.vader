@@ -1,0 +1,59 @@
+Given smarty (simple comment):
+  {* simple comment *}
+  <span>content</span>
+  {*
+   * multiline
+   *}
+  <div class="{* in html string *}"></div>
+
+Execute (comment detected inline, multiline and in html string):
+  AssertEqual 'smartyComment', SyntaxOf("comment")
+  AssertEqual 'smartyComment', SyntaxOf("multiline")
+  AssertEqual 'smartyComment', SyntaxOf("string")
+  AssertNotEqual 'smartyComment', SyntaxOf("content")
+
+############################################
+
+Given smarty (commented smarty code):
+  {* commented code
+  {if $condition}
+    {$variable}
+  {/if}
+  *}
+  {$outside}
+
+Execute (commented code detected as comment):
+  AssertEqual 'smartyComment', SyntaxOf("commented")
+  AssertEqual 'smartyComment', SyntaxOf("condition")
+  AssertEqual 'smartyComment', SyntaxOf("variable")
+  AssertNotEqual 'smartyComment', SyntaxOf("outside")
+
+############################################
+
+Given smarty (commented html code):
+  {* commented code
+  <div id="indiv">
+    <span>commented</span>
+  </div>
+  *}
+  outside
+
+Execute (commented code detected as comment):
+  AssertEqual 'smartyComment', SyntaxOf("commented")
+  AssertEqual 'smartyComment', SyntaxOf("indiv")
+  AssertNotEqual 'smartyComment', SyntaxOf("outside")
+
+############################################
+
+Given smarty (commented html code):
+  <script>
+    {* commented javascript code
+    let jsvar = "foo"
+    *}
+    let outside = 2
+  </script>
+
+Execute (commented code detected as comment):
+  AssertEqual 'smartyComment', SyntaxOf("commented")
+  AssertEqual 'smartyComment', SyntaxOf("jsvar")
+  AssertNotEqual 'smartyComment', SyntaxOf("outside")

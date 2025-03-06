@@ -1,0 +1,5 @@
+Execute (Load simple smarty file):
+  edit simple.tpl
+
+Then (Detected simple.tpl as a smarty file):
+  AssertEqual &filetype, 'smarty'
