@@ -13,7 +13,7 @@ jobs:
     name: Lint code with Vint and shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       # There exists a vint github action but it can't install the alpha
       # version. vint has not been moving since 2020 and we need to use the
       # alpha release since it fixed some things wrt the latest stable release.
@@ -48,7 +48,7 @@ jobs:
         editor: ["vim-v8.0.0000", "vim-v8.2.2434", "vim-v9.1.1122", "nvim-v0.9.0", "nvim-v0.9.5", "nvim-v0.10.4"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: get editor name
         env:
           EDITORVERSION: ${{matrix.editor}}
