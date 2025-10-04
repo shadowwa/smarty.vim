@@ -17,7 +17,7 @@ jobs:
       # There exists a vint github action but it can't install the alpha
       # version. vint has not been moving since 2020 and we need to use the
       # alpha release since it fixed some things wrt the latest stable release.
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.10'
       - name: Install vint
