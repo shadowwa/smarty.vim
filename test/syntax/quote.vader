@@ -1,0 +1,31 @@
+Given smarty (simple quote):
+  {tag attribute='simple quote'}
+
+Execute (string in simple quote):
+  AssertEqual 'smartyString', SyntaxOf("simple")
+
+############################################
+
+Given smarty (double quote):
+  {tag attribute="double quote"}
+
+Execute (string in double quote):
+  AssertEqual 'smartyStringDouble', SyntaxOf("double")
+
+############################################
+
+Given smarty (simple escaped quote):
+  {tag attribute='simple quote \'escaped'}
+
+Execute (string in simple quote):
+  AssertEqual 'smartyString', SyntaxOf("escaped")
+
+############################################
+
+Given smarty (double escaped quote):
+  {tag attribute="double quote \"escaped"}
+
+Execute (string in double quote):
+  AssertEqual 'smartyStringDouble', SyntaxOf("escaped")
+
+############################################
