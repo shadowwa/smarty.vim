@@ -28,7 +28,7 @@ jobs:
       - name: Lint shell scripts
         uses: ludeeus/action-shellcheck@master
       - name: Lint Markdown files
-        uses: DavidAnson/markdownlint-cli2-action@v24
+        uses: DavidAnson/markdownlint-cli2-action@v24.1.0
 
   tests:
     runs-on: ubuntu-latest
