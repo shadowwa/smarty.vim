@@ -12,7 +12,7 @@ Given smarty (unindented foreach block with text):
   no items
   {/foreach}
 
-Do (TODO: Indent foreach block with text):
+Do (Indent foreach block with text):
   gg=G
 
 Expect smarty (indented foreach block with text):
@@ -31,7 +31,7 @@ Given smarty (unindented for block with text):
   empty
   {/for}
 
-Do (TODO: Indent for block with text):
+Do (Indent for block with text):
   gg=G
 
 Expect smarty (indented for block with text):
@@ -50,7 +50,7 @@ Given smarty (unindented section block with text):
   no customers
   {/section}
 
-Do (TODO: Indent section block with text):
+Do (Indent section block with text):
   gg=G
 
 Expect smarty (indented section block with text):
@@ -84,7 +84,7 @@ Given smarty (unindented foreach block with html):
   <p>no items</p>
   {/foreach}
 
-Do (TODO: Indent foreach block with html):
+Do (Indent foreach block with html):
   gg=G
 
 Expect smarty (indented foreach block with html):
@@ -103,7 +103,7 @@ Given smarty (unindented for block with html):
   <span>empty</span>
   {/for}
 
-Do (TODO: Indent for block with html):
+Do (Indent for block with html):
   gg=G
 
 Expect smarty (indented for block with html):
@@ -122,7 +122,7 @@ Given smarty (unindented section block with html):
   <div>no customers</div>
   {/section}
 
-Do (TODO: Indent section block with html):
+Do (Indent section block with html):
   gg=G
 
 Expect smarty (indented section block with html):
