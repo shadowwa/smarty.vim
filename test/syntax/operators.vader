@@ -28,7 +28,7 @@ Given smarty (comparison operators symbolic splitted):
   {if $k <= $l && $m >= $n}
   {/if}
 
-Execute (TODO: symbolic comparison operators splitted):
+Execute (symbolic comparison operators splitted):
   AssertEqual 'smartyOperator', SyntaxOf('<')
   AssertEqual 'smartyOperator', SyntaxOf('=', 1)
   AssertEqual 'smartyOperator', SyntaxOf('>')

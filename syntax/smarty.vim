@@ -229,7 +229,7 @@ syn match smartyNumber "\<0x\x\{1,8}\>"  contained display
 syn keyword smartyBoolean contained true false
 
 " Operator
-syn match  smartyOperator contained  "||\|&&\|===\|==\|!=\|>\|<\|>=\|<=\|!\|%"
+syn match  smartyOperator contained  "||\|&&\|===\|==\|!=\|>=\|<=\|>\|<\|!\|%"
 syn match  smartyOperator contained  " \@<=\(neq\|gte\|lte\|not\|mod\|ne\|eq\|gt\|lt\|ge\|le\|matches\) \@="
 syn match  smartyOperator contained  " \@<=is\( not\)\? \(even\|odd\)"
 syn match  smartyOperator contained  " \@<=is\( not\)\? \(div by\|even by\|odd by\) \@="
