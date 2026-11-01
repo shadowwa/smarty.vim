@@ -1,0 +1,69 @@
+Given smarty (tags in class attribute with single quotes):
+  <div class="{$variable|replace:'foo':'bar'}">
+      text
+  </div>
+
+Execute (html tags after smarty tag in class with single quotes):
+  AssertEqual 'smartyVariable', SyntaxOf('variable')
+  AssertEqual 'smartyString', SyntaxOf('foo')
+  AssertEqual 'htmlTagName', SyntaxOf('div', 2)
+
+############################################
+
+Given smarty (tags in onclick attribute with single quotes):
+  <div onclick="{$variable|replace:'foo':'bar'}">
+      text
+  </div>
+
+Execute (TODO: html tags after smarty tag in onclick with single quotes):
+  AssertEqual 'smartyVariable', SyntaxOf('variable')
+  AssertEqual 'smartyString', SyntaxOf('foo')
+  AssertEqual 'htmlTagName', SyntaxOf('div', 2)
+
+############################################
+
+Given smarty (tags in class attribute with double quotes):
+  <div class="{$variable|replace:"foo":"bar"}">
+      text
+  </div>
+
+Execute (html tags after smarty tag in onclick with double quotes):
+  AssertEqual 'smartyVariable', SyntaxOf('variable')
+  AssertEqual 'smartyStringDouble', SyntaxOf('foo')
+  AssertEqual 'htmlTagName', SyntaxOf('div', 2)
+
+############################################
+
+Given smarty (tags in onclick attribute with double quotes):
+  <div onclick="{$variable|replace:"foo":"bar"}">
+      text
+  </div>
+
+Execute (TODO: html tags after smarty tag in onclick with double quotes):
+  AssertEqual 'smartyVariable', SyntaxOf('variable')
+  AssertEqual 'smartyStringDouble', SyntaxOf('foo')
+  AssertEqual 'htmlTagName', SyntaxOf('div', 2)
+
+############################################
+
+Given smarty (tags in class attribute with single quotes inside double quotes):
+  <div class="{$variable|replace:"'":"&quot;"}">
+      text
+  </div>
+
+Execute (html tags after smarty tag with quote are correctly highlighted):
+  AssertEqual 'smartyVariable', SyntaxOf('variable')
+  AssertEqual 'smartyStringDouble', SyntaxOf("'")
+  AssertEqual 'htmlTagName', SyntaxOf('div', 2)
+
+############################################
+
+Given smarty (tags in onclick attribute with single quote inside double quotes):
+  <div onclick="{$variable|replace:"'":"&quot;"}">
+      text
+  </div>
+
+Execute (TODO: html tags after smarty tag with quote in onclick are correctly highlighted):
+  AssertEqual 'smartyVariable', SyntaxOf('variable')
+  AssertEqual 'smartyStringDouble', SyntaxOf("'")
+  AssertEqual 'htmlTagName', SyntaxOf('div', 2)

@@ -1,0 +1,126 @@
+Given smarty (array indexing):
+  {$foo[0]}
+  {$foo['bar']}
+  {$foo["bar"]}
+  {$foo[$bar]}
+
+Execute (array index):
+  AssertEqual 'smartyVariable', SyntaxOf('foo', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('foo', 2)
+  AssertEqual 'smartyVariable', SyntaxOf('foo', 3)
+  AssertEqual 'smartyVariable', SyntaxOf('foo', 4)
+  AssertEqual 'smartyVariable', SyntaxOf('bar', 3)
+
+############################################
+
+Given smarty (object property and method call):
+  {$user->name}
+  {$user->getName()}
+  {$user->getDetails($arg1, 'arg2')}
+
+Execute (object access):
+  AssertEqual 'smartyVariable', SyntaxOf('user', 1)
+  AssertEqual 'smartyGlue', SyntaxOf('\->', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('user', 2)
+  AssertEqual 'smartyGlue', SyntaxOf('\->', 2)
+  AssertEqual 'smartyVariable', SyntaxOf('user', 3)
+  AssertEqual 'smartyGlue', SyntaxOf('\->', 3)
+  AssertEqual 'smartyVariable', SyntaxOf('arg1')
+  AssertEqual 'smartyString', SyntaxOf('arg2')
+
+############################################
+
+Given smarty (dot access for array elements):
+  {$foo.bar}
+  {$foo.bar.baz}
+  {$foo.$bar}
+
+Execute (dot access):
+  AssertEqual 'smartyVariable', SyntaxOf('foo', 1)
+  AssertEqual 'smartyGlue', SyntaxOf('\.', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('foo', 2)
+  AssertEqual 'smartyGlue', SyntaxOf('\.', 2)
+  AssertEqual 'smartyVariable', SyntaxOf('foo', 3)
+  AssertEqual 'smartyVariable', SyntaxOf('bar', 3)
+
+############################################
+
+Given smarty (config variables with hash and dollar):
+  {#foo#}
+  {#foo_bar#}
+  {$smarty.config.foo}
+
+Execute (config variables):
+  AssertEqual 'smartyHashSign', SyntaxOf('#', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('foo', 1)
+  AssertEqual 'smartyHashSign', SyntaxOf('#', 2)
+  AssertEqual 'smartyVariable', SyntaxOf('foo_bar')
+  AssertEqual 'smartyVariable', SyntaxOf('smarty')
+  AssertEqual 'smartyGlue', SyntaxOf('\.', 1)
+
+############################################
+
+Given smarty (special $smarty variables):
+  {$smarty.now}
+  {$smarty.const.PHP_VERSION}
+  {$smarty.capture.foo}
+  {$smarty.get.page}
+  {$smarty.post.user}
+  {$smarty.session.id}
+  {$smarty.server.SERVER_NAME}
+  {$smarty.env.PATH}
+  {$smarty.current_dir}
+  {$smarty.version}
+  {$smarty.block.child}
+  {$smarty.block.parent}
+
+Execute ($smarty reserved variable):
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 2)
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 3)
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 4)
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 5)
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 6)
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 7)
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 8)
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 9)
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 10)
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 11)
+  AssertEqual 'smartyVariable', SyntaxOf('smarty', 12)
+
+############################################
+
+Given smarty (backtick variable embedding in double quotes):
+  {assign var='greeting' value="Hello `$user->name` welcome"}
+  {assign var='msg' value="The count is `$count`."}
+
+Execute (backtick variable):
+  AssertEqual 'Constant', SyntaxOf('`', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('user')
+  AssertEqual 'Constant', SyntaxOf('`', 2)
+  AssertEqual 'Constant', SyntaxOf('`', 3)
+  AssertEqual 'smartyVariable', SyntaxOf('count', 2)
+  AssertEqual 'Constant', SyntaxOf('`', 4)
+
+############################################
+
+Given smarty (numbers decimal and hexadecimal):
+  {assign var='dec' value=123}
+  {assign var='hex' value=0x1f}
+  {if $x == 456}
+  {/if}
+
+Execute (numbers):
+  AssertEqual 'smartyNumber', SyntaxOf('123')
+  AssertEqual 'smartyNumber', SyntaxOf('0x1f')
+  AssertEqual 'smartyNumber', SyntaxOf('456')
+
+############################################
+
+Given smarty (booleans true and false):
+  {assign var='t' value=true}
+  {assign var='f' value=false}
+
+Execute (booleans):
+  AssertEqual 'smartyBoolean', SyntaxOf('true')
+  AssertEqual 'smartyBoolean', SyntaxOf('false')

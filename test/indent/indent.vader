@@ -25,6 +25,27 @@ Expect smarty (very basic indentation result):
 ############################################
 
 Given smarty (non indented smarty template):
+  <td>
+  {if $test}
+  black
+  {else}
+  {/if}
+  <td>
+
+Do (TODO: Indent the whole buffer):
+  gg=G
+
+Expect smarty (if else with empty branch in html tag indentation result):
+  <td>
+      {if $test}
+          black
+      {else}
+      {/if}
+  </td>
+
+############################################
+
+Given smarty (non indented smarty template):
   {if $test}
   {if $test}
   black

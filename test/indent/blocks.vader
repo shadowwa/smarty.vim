@@ -1,0 +1,190 @@
+Execute (setup indent configuration):
+  set expandtab
+  set shiftwidth=4
+  set tabstop=4
+  set softtabstop=4
+  let g:smarty_indent_block=1
+
+Given smarty (unindented foreach block with text):
+  {foreach $items as $item}
+  item content
+  {foreachelse}
+  no items
+  {/foreach}
+
+Do (TODO: Indent foreach block with text):
+  gg=G
+
+Expect smarty (indented foreach block with text):
+  {foreach $items as $item}
+      item content
+  {foreachelse}
+      no items
+  {/foreach}
+
+############################################
+
+Given smarty (unindented for block with text):
+  {for $i=1 to 10}
+  number
+  {forelse}
+  empty
+  {/for}
+
+Do (TODO: Indent for block with text):
+  gg=G
+
+Expect smarty (indented for block with text):
+  {for $i=1 to 10}
+      number
+  {forelse}
+      empty
+  {/for}
+
+############################################
+
+Given smarty (unindented section block with text):
+  {section name='cust' loop=$customers}
+  customer line
+  {sectionelse}
+  no customers
+  {/section}
+
+Do (TODO: Indent section block with text):
+  gg=G
+
+Expect smarty (indented section block with text):
+  {section name='cust' loop=$customers}
+      customer line
+  {sectionelse}
+      no customers
+  {/section}
+
+############################################
+
+Given smarty (unindented while block with text):
+  {while $count > 0}
+  decrementing
+  {/while}
+
+Do (Indent while block with text):
+  gg=G
+
+Expect smarty (indented while block with text):
+  {while $count > 0}
+      decrementing
+  {/while}
+
+############################################
+
+Given smarty (unindented foreach block with html):
+  {foreach $items as $item}
+  <p>{$item}</p>
+  {foreachelse}
+  <p>no items</p>
+  {/foreach}
+
+Do (TODO: Indent foreach block with html):
+  gg=G
+
+Expect smarty (indented foreach block with html):
+  {foreach $items as $item}
+      <p>{$item}</p>
+  {foreachelse}
+      <p>no items</p>
+  {/foreach}
+
+############################################
+
+Given smarty (unindented for block with html):
+  {for $i=1 to 10}
+  <span>{$i}</span>
+  {forelse}
+  <span>empty</span>
+  {/for}
+
+Do (TODO: Indent for block with html):
+  gg=G
+
+Expect smarty (indented for block with html):
+  {for $i=1 to 10}
+      <span>{$i}</span>
+  {forelse}
+      <span>empty</span>
+  {/for}
+
+############################################
+
+Given smarty (unindented section block with html):
+  {section name='cust' loop=$customers}
+  <div>{$customers[cust]}</div>
+  {sectionelse}
+  <div>no customers</div>
+  {/section}
+
+Do (TODO: Indent section block with html):
+  gg=G
+
+Expect smarty (indented section block with html):
+  {section name='cust' loop=$customers}
+      <div>{$customers[cust]}</div>
+  {sectionelse}
+      <div>no customers</div>
+  {/section}
+
+############################################
+
+Given smarty (unindented block tag with html):
+  {block name='content'}
+  <div>
+  <p>content</p>
+  </div>
+  {/block}
+
+Do (Indent block tag with html):
+  gg=G
+
+Expect smarty (indented block tag with html):
+  {block name='content'}
+      <div>
+          <p>content</p>
+      </div>
+  {/block}
+
+############################################
+
+Given smarty (unindented while block with html):
+  {while $count > 0}
+  <li>{$count}</li>
+  {/while}
+
+Do (Indent while block with html):
+  gg=G
+
+Expect smarty (indented while block with html):
+  {while $count > 0}
+      <li>{$count}</li>
+  {/while}
+
+############################################
+
+Given smarty (nested if in foreach):
+  {foreach $users as $user}
+  {if $user.active}
+  <span>active</span>
+  {else}
+  <span>inactive</span>
+  {/if}
+  {/foreach}
+
+Do (Indent nested blocks):
+  gg=G
+
+Expect smarty (indented nested blocks):
+  {foreach $users as $user}
+      {if $user.active}
+          <span>active</span>
+      {else}
+          <span>inactive</span>
+      {/if}
+  {/foreach}

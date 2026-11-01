@@ -1,0 +1,397 @@
+Given smarty (simple modifier):
+  {$name|capitalize}
+  {$name|cat:" world"}
+  {$count|count_characters}
+  {$count|count_characters:true}
+  {$words|count_paragraphs}
+  {$words|count_sentences}
+  {$words|count_words}
+
+Execute (TODO: character and word modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('capitalize')
+  AssertEqual 'smartyModifier', SyntaxOf('cat')
+  AssertEqual 'smartyStringDouble', SyntaxOf('world')
+  AssertEqual 'smartyModifier', SyntaxOf('count_characters', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('count_characters', 2)
+  AssertEqual 'smartyBoolean', SyntaxOf('true')
+  AssertEqual 'smartyModifier', SyntaxOf('count_paragraphs')
+  AssertEqual 'smartyModifier', SyntaxOf('count_sentences')
+  AssertEqual 'smartyModifier', SyntaxOf('count_words')
+
+############################################
+
+# can also be used as a function
+Given smarty (count modifier):
+  {$myArray|count}
+
+Execute (count modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('count')
+
+############################################
+
+Given smarty (date_format modifier):
+  {$yesterday|date_format}
+  {$yesterday|date_format:"%A, %B %e, %Y"}
+  {$yesterday|date_format:"%D":"-"}
+
+Execute (date_format modifier and parameters):
+  AssertEqual 'smartyModifier', SyntaxOf('date_format', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('date_format', 2)
+  AssertEqual 'smartyStringDouble', SyntaxOf('%A')
+  AssertEqual 'smartyModifier', SyntaxOf('date_format', 3)
+  AssertEqual 'smartyStringDouble', SyntaxOf('%D')
+  AssertEqual 'smartyStringDouble', SyntaxOf('-')
+
+############################################
+
+Given smarty (debug_print_var modifier):
+  {$myVar|debug_print_var}
+  {$myVar|debug_print_var:5}
+  {$myVar|debug_print_var:10:40}
+
+Execute (debug_print_var modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('debug_print_var', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('debug_print_var', 2)
+  AssertEqual 'smartyModifier', SyntaxOf('debug_print_var', 3)
+
+############################################
+
+Given smarty (default modifier):
+  {$articleTitle|default:'no title'}
+
+Execute (default modifier):
+  AssertEqual 'smartyModifier', SyntaxOf('default')
+  AssertEqual 'smartyString', SyntaxOf('no title')
+
+############################################
+
+# can also be used as a function
+Given smarty (empty modifier):
+  {if $myVar|empty}it's an empty variable{/if}
+
+Execute (empty modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('empty')
+
+############################################
+
+Given smarty (escape modifier):
+  {$articleTitle|escape}
+  {$articleTitle|escape:'html'}
+  {$articleTitle|escape:'htmlall'}
+  {$articleTitle|escape:'url'}
+  {$articleTitle|escape:'quotes'}
+  {$articleTitle|escape:'hex'}
+  {$articleTitle|escape:'hexentity'}
+  {$articleTitle|escape:'javascript'}
+  {$articleTitle|escape:'mail'}
+
+Execute (escape modifier and formats):
+  AssertEqual 'smartyModifier', SyntaxOf('escape', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('escape', 2)
+  AssertEqual 'smartyString', SyntaxOf('html')
+  AssertEqual 'smartyString', SyntaxOf('htmlall')
+  AssertEqual 'smartyString', SyntaxOf('url')
+  AssertEqual 'smartyString', SyntaxOf('quotes')
+  AssertEqual 'smartyString', SyntaxOf('hex')
+  AssertEqual 'smartyString', SyntaxOf('hexentity')
+  AssertEqual 'smartyString', SyntaxOf('javascript')
+  AssertEqual 'smartyString', SyntaxOf('mail')
+
+############################################
+
+Given smarty (from_charset and to_charset modifiers):
+  {$text|from_charset:"latin1"}
+  {$text|to_charset:"utf-8"}
+
+Execute (charset modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('from_charset')
+  AssertEqual 'smartyStringDouble', SyntaxOf('latin1')
+  AssertEqual 'smartyModifier', SyntaxOf('to_charset')
+  AssertEqual 'smartyStringDouble', SyntaxOf('utf-8')
+
+############################################
+
+Given smarty (indent modifier):
+  {$articleTitle|indent}
+  {$articleTitle|indent:10}
+  {$articleTitle|indent:10:"\t"}
+
+Execute (indent modifier):
+  AssertEqual 'smartyModifier', SyntaxOf('indent', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('indent', 2)
+  AssertEqual 'smartyParameter', SyntaxOf('10', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('indent', 3)
+  AssertEqual 'smartyParameter', SyntaxOf('10', 2)
+  AssertEqual 'smartyStringDouble', SyntaxOf('\\t')
+
+############################################
+
+# in_array is only used as a function
+
+############################################
+
+Given smarty (is_array modifier):
+  {if $myVar|is_array}it's an array{/if}
+
+Execute (is_array modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('is_array')
+
+############################################
+
+Given smarty (isset modifier):
+  {if $myVar|isset}it's an array{/if}
+
+Execute (isset modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('isset')
+
+############################################
+
+Given smarty (join modifier):
+  {$myArray|join}
+
+Execute (join modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('join')
+
+############################################
+
+Given smarty (json_encode modifier):
+  {$myArray|json_encode}
+  {$myArray|json_encode:16}
+
+Execute (json_encode modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('json_encode', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('json_encode', 2)
+
+############################################
+
+Given smarty (case modifiers):
+  {$articleTitle|lower}
+  {$articleTitle|upper}
+
+Execute (case modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('lower')
+  AssertEqual 'smartyModifier', SyntaxOf('upper')
+
+############################################
+
+Given smarty (noprint modifier):
+  {$controller->sendEmail()|noprint}
+
+Execute (noprint modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('noprint')
+
+############################################
+
+Given smarty (number_format modifier):
+  {$num|number_format}
+  {$num|number_format:2}
+  {$num|number_format:2:".":""}
+
+Execute (number_format modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('number_format', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('number_format', 2)
+  AssertEqual 'smartyModifier', SyntaxOf('number_format', 3)
+
+############################################
+
+Given smarty (nl2br modifier):
+  {$articleTitle|nl2br}
+
+Execute (nl2br modifier):
+  AssertEqual 'smartyModifier', SyntaxOf('nl2br')
+
+############################################
+
+Given smarty (raw modifier):
+  {$myVar|raw}
+
+Execute (raw modifier):
+  AssertEqual 'smartyModifier', SyntaxOf('raw')
+
+############################################
+
+Given smarty (regex_replace and replace modifiers):
+  {$articleTitle|regex_replace:"/[\r\t\n]/":" "}
+  {$articleTitle|replace:"foo":"bar"}
+
+Execute (replace modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('regex_replace')
+  AssertEqual 'smartyStringDouble', SyntaxOf('/\[\\r\\t\\n\]/')
+  AssertEqual 'smartyModifier', SyntaxOf('replace')
+  AssertEqual 'smartyStringDouble', SyntaxOf('foo')
+  AssertEqual 'smartyStringDouble', SyntaxOf('bar')
+
+############################################
+
+Given smarty (round modifier):
+  {3.14|round}
+  {3.141592|round:2}
+
+Execute (TODO: round modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('round', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('round', 2)
+
+############################################
+
+Given smarty (spacify modifier):
+  {$articleTitle|spacify}
+  {$articleTitle|spacify:"^^"}
+
+Execute (spacify modifier):
+  AssertEqual 'smartyModifier', SyntaxOf('spacify', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('spacify', 2)
+  AssertEqual 'smartyStringDouble', SyntaxOf('\^\^')
+
+############################################
+
+Given smarty (split modifier):
+  {foreach $ids|split:',' as $id}
+    <li>{$id}</li>
+  {/foreach}
+
+Execute (split modifier):
+  AssertEqual 'smartyModifier', SyntaxOf('split')
+  AssertEqual 'smartyVariable', SyntaxOf('ids')
+  AssertEqual 'smartyVariable', SyntaxOf('id', 2)
+  AssertEqual 'smartyVariable', SyntaxOf('id', 3)
+
+############################################
+
+Given smarty (str_repeat modifier):
+  {"hi"|str_repeat:2}
+
+Execute (str_repeat modifier):
+  AssertEqual 'smartyStringDouble', SyntaxOf('hi')
+  AssertEqual 'smartyModifier', SyntaxOf('str_repeat')
+
+############################################
+
+Given smarty (string_format modifier):
+  {$number|string_format:"%.2f"}
+  {$number|string_format:"%d"}
+
+Execute (string_format modifier):
+  AssertEqual 'smartyModifier', SyntaxOf('string_format', 1)
+  AssertEqual 'smartyStringDouble', SyntaxOf('%.2f')
+  AssertEqual 'smartyModifier', SyntaxOf('string_format', 2)
+  AssertEqual 'smartyStringDouble', SyntaxOf('%d')
+
+############################################
+
+Given smarty (strip and strip_tags modifiers):
+  {$articleTitle|strip}
+  {$articleTitle|strip:"&nbsp;"}
+  {$articleTitle|strip_tags}
+  {$articleTitle|strip_tags:false}
+
+Execute (TODO: strip modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('strip', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('strip', 2)
+  AssertEqual 'smartyStringDouble', SyntaxOf('&nbsp;')
+  AssertEqual 'smartyModifier', SyntaxOf('strip_tags', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('strip_tags', 2)
+  AssertEqual 'smartyBoolean', SyntaxOf('false')
+
+############################################
+
+Given smarty (strlen modifier):
+  {"Smarty"|strlen}
+  {156|strlen}
+
+Execute (TODO: strlen modifier):
+  AssertEqual 'smartyStringDouble', SyntaxOf('Smarty')
+  AssertEqual 'smartyModifier', SyntaxOf('strlen', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('strlen', 2)
+
+############################################
+
+Given smarty (substr modifier):
+  {"Smarty"|substr:2}
+  {"Smarty"|substr:2:3}
+
+Execute (substr modifier):
+  AssertEqual 'smartyStringDouble', SyntaxOf('Smarty', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('substr', 1)
+  AssertEqual 'smartyStringDouble', SyntaxOf('Smarty', 2)
+  AssertEqual 'smartyModifier', SyntaxOf('substr', 2)
+
+############################################
+
+Given smarty (truncate modifier):
+  {$articleTitle|truncate}
+  {$articleTitle|truncate:30}
+  {$articleTitle|truncate:30:"foo"}
+  {$articleTitle|truncate:30:"foo":true}
+  {$articleTitle|truncate:30:"foo":true:true}
+
+Execute (TODO: truncate modifier):
+  AssertEqual 'smartyModifier', SyntaxOf('truncate', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('truncate', 2)
+  AssertEqual 'smartyParameter', SyntaxOf('30', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('truncate', 3)
+  AssertEqual 'smartyParameter', SyntaxOf('30', 2)
+  AssertEqual 'smartyStringDouble', SyntaxOf('foo', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('truncate', 4)
+  AssertEqual 'smartyParameter', SyntaxOf('30', 3)
+  AssertEqual 'smartyStringDouble', SyntaxOf('foo', 2)
+  AssertEqual 'smartyBoolean', SyntaxOf('true', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('truncate', 5)
+  AssertEqual 'smartyParameter', SyntaxOf('30', 4)
+  AssertEqual 'smartyStringDouble', SyntaxOf('foo', 3)
+  AssertEqual 'smartyBoolean', SyntaxOf('true', 2)
+  AssertEqual 'smartyBoolean', SyntaxOf('true', 3)
+
+############################################
+
+Given smarty (unescape modifier):
+  {$articleTitle|unescape}
+  {$articleTitle|unescape:'html'}
+  {$articleTitle|unescape:'html':'utf-8'}
+
+Execute (unescape modifier and formats):
+  AssertEqual 'smartyModifier', SyntaxOf('unescape', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('unescape', 2)
+  AssertEqual 'smartyString', SyntaxOf('html', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('unescape', 3)
+  AssertEqual 'smartyString', SyntaxOf('html', 2)
+  AssertEqual 'smartyString', SyntaxOf('utf-8')
+
+############################################
+
+Given smarty (wordwrap modifier):
+  {$articleTitle|wordwrap:30}
+  {$articleTitle|wordwrap:20:"\n"}
+  {$articleTitle|wordwrap:30:"<br />\n":true}
+
+Execute (TODO: wordwrap modifier):
+  AssertEqual 'smartyModifier', SyntaxOf('wordwrap', 1)
+  AssertEqual 'smartyParameter', SyntaxOf('30', 1)
+  AssertEqual 'smartyModifier', SyntaxOf('wordwrap', 2)
+  AssertEqual 'smartyParameter', SyntaxOf('20')
+  AssertEqual 'smartyStringDouble', SyntaxOf('\\n')
+  AssertEqual 'smartyModifier', SyntaxOf('wordwrap', 3)
+  AssertEqual 'smartyParameter', SyntaxOf('30', 2)
+  AssertEqual 'smartyStringDouble', SyntaxOf('<br />\\n')
+  AssertEqual 'smartyBoolean', SyntaxOf('true')
+
+############################################
+
+Given smarty (chained modifiers):
+  {$articleTitle|lower|spacify|truncate:30:"foo"}
+
+Execute (chained modifiers):
+  AssertEqual 'smartyModifier', SyntaxOf('lower')
+  AssertEqual 'smartyModifier', SyntaxOf('spacify')
+  AssertEqual 'smartyModifier', SyntaxOf('truncate')
+  AssertEqual 'smartyParameter', SyntaxOf('30')
+  AssertEqual 'smartyStringDouble', SyntaxOf('foo')
+
+############################################
+
+Given smarty (modifier with variable parameters):
+  {$text|replace:$search:$replace}
+
+Execute (modifier with variable parameters):
+  AssertEqual 'smartyModifier', SyntaxOf('replace')
+  AssertEqual 'smartyVariable', SyntaxOf('search')
+  AssertEqual 'smartyVariable', SyntaxOf('replace', 2)

@@ -1,0 +1,196 @@
+Given smarty (counter tag):
+  {counter start=0 skip=2 print=false assign='counter_val'}
+
+Execute (counter tag and attributes):
+  AssertEqual 'smartySRepeat', SyntaxOf('counter')
+  AssertEqual 'smartyProperty', SyntaxOf('start=')
+  AssertEqual 'smartyNumber', SyntaxOf('0')
+  AssertEqual 'smartyProperty', SyntaxOf('skip=')
+  AssertEqual 'smartyNumber', SyntaxOf('2')
+  AssertEqual 'smartyProperty', SyntaxOf('print=')
+  AssertEqual 'smartyBoolean', SyntaxOf('false')
+  AssertEqual 'smartySTags', SyntaxOf('assign=')
+  AssertEqual 'smartyString', SyntaxOf('counter_val')
+
+############################################
+
+Given smarty (cycle tag):
+  {cycle values='odd,even' assign='row_class' reset=true}
+
+Execute (cycle tag and attributes):
+  AssertEqual 'smartySRepeat', SyntaxOf('cycle')
+  AssertEqual 'smartyProperty', SyntaxOf('values=')
+  AssertEqual 'smartyString', SyntaxOf('odd,even')
+  AssertEqual 'smartySTags', SyntaxOf('assign=')
+  AssertEqual 'smartyString', SyntaxOf('row_class')
+  AssertEqual 'smartyProperty', SyntaxOf('reset=')
+  AssertEqual 'smartyBoolean', SyntaxOf('true')
+
+############################################
+
+# debug seems to be a builting tag
+
+############################################
+
+Given smarty (eval tag):
+  {eval var=$foo assign='result'}
+
+Execute (eval tag):
+  AssertEqual 'smartySTags', SyntaxOf('eval')
+  AssertEqual 'smartyProperty', SyntaxOf('var=')
+  AssertEqual 'smartyVariable', SyntaxOf('foo')
+  AssertEqual 'smartySTags', SyntaxOf('assign=')
+  AssertEqual 'smartyString', SyntaxOf('result')
+
+############################################
+
+Given smarty (fetch tag):
+  {fetch file='http://example.com' assign='content'}
+
+Execute (fetch tag):
+  AssertEqual 'smartySTags', SyntaxOf('fetch')
+  AssertEqual 'smartyProperty', SyntaxOf('file=')
+  AssertEqual 'smartyString', SyntaxOf('http://example.com')
+  AssertEqual 'smartySTags', SyntaxOf('assign=')
+  AssertEqual 'smartyString', SyntaxOf('content')
+
+############################################
+
+Given smarty (html_checkboxes tag):
+  {html_checkboxes name='id' values=$ids checked=$checked separator='<br />'}
+
+Execute (html_checkboxes tag):
+  AssertEqual 'smartySTags', SyntaxOf('html_checkboxes')
+  AssertEqual 'smartyProperty', SyntaxOf('name=')
+  AssertEqual 'smartyString', SyntaxOf('id')
+  AssertEqual 'smartyProperty', SyntaxOf('values=')
+  AssertEqual 'smartyVariable', SyntaxOf('ids')
+  AssertEqual 'smartyCProperty', SyntaxOf('checked=')
+  AssertEqual 'smartyVariable', SyntaxOf('[$]\zschecked')
+  AssertEqual 'smartyProperty', SyntaxOf('separator=')
+
+############################################
+
+Given smarty (html_image tag):
+  {html_image file='logo.gif' alt='Logo' width=100 height=50}
+
+Execute (html_image tag):
+  AssertEqual 'smartySTags', SyntaxOf('html_image')
+  AssertEqual 'smartyProperty', SyntaxOf('file=')
+  AssertEqual 'smartyString', SyntaxOf('logo.gif')
+  AssertEqual 'smartyProperty', SyntaxOf('alt=')
+  AssertEqual 'smartyString', SyntaxOf('Logo')
+  AssertEqual 'smartyProperty', SyntaxOf('width=')
+  AssertEqual 'smartyNumber', SyntaxOf('100')
+  AssertEqual 'smartyProperty', SyntaxOf('height=')
+  AssertEqual 'smartyNumber', SyntaxOf('50')
+
+############################################
+
+Given smarty (html_options tag):
+  {html_options name='foo' options=$my_options selected=$selected}
+
+Execute (html_options tag):
+  AssertEqual 'smartySTags', SyntaxOf('html_options')
+  AssertEqual 'smartyProperty', SyntaxOf('name=')
+  AssertEqual 'smartyString', SyntaxOf('foo')
+  AssertEqual 'smartyProperty', SyntaxOf('options=')
+  AssertEqual 'smartyVariable', SyntaxOf('my_options')
+  AssertEqual 'smartyProperty', SyntaxOf('selected=')
+  AssertEqual 'smartyVariable', SyntaxOf('[$]\zsselected')
+
+############################################
+
+Given smarty (html_radios tag):
+  {html_radios name='id' options=$options selected=$selected separator='<br />'}
+
+Execute (html_radios tag):
+  AssertEqual 'smartySTags', SyntaxOf('html_radios')
+  AssertEqual 'smartyProperty', SyntaxOf('name=')
+  AssertEqual 'smartyString', SyntaxOf('id')
+  AssertEqual 'smartyProperty', SyntaxOf('options=')
+  AssertEqual 'smartyVariable', SyntaxOf('[$]\zsoptions')
+  AssertEqual 'smartyProperty', SyntaxOf('selected=')
+  AssertEqual 'smartyVariable', SyntaxOf('[$]\zsselected')
+  AssertEqual 'smartyProperty', SyntaxOf('separator=')
+
+############################################
+
+Given smarty (html_select_date and html_select_time tags):
+  {html_select_date start_year=2000 end_year=2030 display_days=true}
+  {html_select_time use_24_hours=true display_seconds=false}
+
+Execute (html_select_date and html_select_time tags):
+  AssertEqual 'smartySTags', SyntaxOf('html_select_date')
+  AssertEqual 'smartyProperty', SyntaxOf('start_year=')
+  AssertEqual 'smartyNumber', SyntaxOf('2000')
+  AssertEqual 'smartyProperty', SyntaxOf('end_year=')
+  AssertEqual 'smartyNumber', SyntaxOf('2030')
+  AssertEqual 'smartyProperty', SyntaxOf('display_days=')
+  AssertEqual 'smartyBoolean', SyntaxOf('true', 1)
+  AssertEqual 'smartySTags', SyntaxOf('html_select_time')
+  AssertEqual 'smartyProperty', SyntaxOf('use_24_hours=')
+  AssertEqual 'smartyBoolean', SyntaxOf('true', 2)
+  AssertEqual 'smartyProperty', SyntaxOf('display_seconds=')
+  AssertEqual 'smartyBoolean', SyntaxOf('false')
+
+############################################
+
+Given smarty (html_table tag):
+  {html_table loop=$data cols=4 table_attr='border="0"'}
+
+Execute (html_table tag):
+  AssertEqual 'smartySTags', SyntaxOf('html_table')
+  AssertEqual 'smartyProperty', SyntaxOf('loop=')
+  AssertEqual 'smartyVariable', SyntaxOf('data')
+  AssertEqual 'smartyProperty', SyntaxOf('cols=')
+  AssertEqual 'smartyNumber', SyntaxOf('4')
+  AssertEqual 'smartyProperty', SyntaxOf('table_attr=')
+
+############################################
+
+Given smarty (mailto tag):
+  {mailto address='me@example.com' text='Send mail' encode='javascript'}
+
+Execute (mailto tag):
+  AssertEqual 'smartySTags', SyntaxOf('mailto')
+  AssertEqual 'smartyProperty', SyntaxOf('address=')
+  AssertEqual 'smartyString', SyntaxOf('me@example.com')
+  AssertEqual 'smartyProperty', SyntaxOf('text=')
+  AssertEqual 'smartyString', SyntaxOf('Send mail')
+  AssertEqual 'smartyProperty', SyntaxOf('encode=')
+  AssertEqual 'smartyString', SyntaxOf('javascript')
+
+############################################
+
+Given smarty (math tag):
+  {math equation='x + y' x=$val1 y=$val2 assign='sum'}
+
+Execute (math tag):
+  AssertEqual 'smartySTags', SyntaxOf('math')
+  AssertEqual 'smartyProperty', SyntaxOf('equation=')
+  AssertEqual 'smartyString', SyntaxOf('x + y')
+  AssertEqual 'smartyCProperty', SyntaxOf('x=')
+  AssertEqual 'smartyVariable', SyntaxOf('val1')
+  AssertEqual 'smartyCProperty', SyntaxOf('y=')
+  AssertEqual 'smartyVariable', SyntaxOf('val2')
+  AssertEqual 'smartySTags', SyntaxOf('assign=')
+  AssertEqual 'smartyString', SyntaxOf('sum')
+
+############################################
+
+Given smarty (textformat tag):
+  {textformat wrap=80 wrap_char="\n" indent=4 assign='formatted'}
+    Long text here
+  {/textformat}
+
+Execute (textformat tag):
+  AssertEqual 'smartyDTags', SyntaxOf('textformat', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('wrap=')
+  AssertEqual 'smartyNumber', SyntaxOf('80')
+  AssertEqual 'smartyProperty', SyntaxOf('wrap_char=')
+  AssertEqual 'smartyProperty', SyntaxOf('indent=')
+  AssertEqual 'smartyNumber', SyntaxOf('4')
+  AssertEqual 'smartyProperty', SyntaxOf('assign=')
+  AssertEqual 'smartyString', SyntaxOf('formatted')
+  AssertEqual 'smartyDTags', SyntaxOf('textformat', 2)

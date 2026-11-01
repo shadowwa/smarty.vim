@@ -1,0 +1,391 @@
+Given smarty (append tag):
+  {append var='name' value='Bob' index='first'}
+
+Execute (append tag and attributes):
+  AssertEqual 'smartySTags', SyntaxOf('append')
+  AssertEqual 'smartyProperty', SyntaxOf('var=')
+  AssertEqual 'smartyString', SyntaxOf('name')
+  AssertEqual 'smartyProperty', SyntaxOf('value=')
+  AssertEqual 'smartyString', SyntaxOf('Bob')
+  AssertEqual 'smartyCProperty', SyntaxOf('index=')
+  AssertEqual 'smartyString', SyntaxOf('first')
+
+############################################
+
+Given smarty (assign tag):
+  {assign var='name' value='Bob'}
+  {assign 'name' 'Bob'}
+
+Execute (assign tag and attributes):
+  AssertEqual 'smartySTags', SyntaxOf('assign', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('var=')
+  AssertEqual 'smartyString', SyntaxOf('name', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('value=')
+  AssertEqual 'smartyString', SyntaxOf('Bob', 1)
+  AssertEqual 'smartySTags', SyntaxOf('assign', 2)
+  AssertEqual 'smartyString', SyntaxOf('name', 2)
+  AssertEqual 'smartyString', SyntaxOf('Bob', 2)
+
+############################################
+
+Given smarty (block tag):
+  {block name='content'}
+    Default content
+  {/block}
+
+Execute (block tag):
+  AssertEqual 'smartyDTags', SyntaxOf('block', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('name=')
+  AssertEqual 'smartyString', SyntaxOf('content')
+  AssertEqual 'smartyDTags', SyntaxOf('block', 2)
+
+############################################
+
+Given smarty (call tag):
+  {call name='myfunc' data=$mydata}
+  {call 'myfunc' data=$mydata}
+
+Execute (call tag and attributes):
+  AssertEqual 'smartySTags', SyntaxOf('call', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('name=')
+  AssertEqual 'smartyString', SyntaxOf('myfunc', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('mydata', 1)
+  AssertEqual 'smartySTags', SyntaxOf('call', 2)
+  AssertEqual 'smartyString', SyntaxOf('myfunc', 2)
+
+############################################
+
+Given smarty (capture tag):
+  {capture name='foo' assign='bar'}
+    Captured text
+  {/capture}
+
+Execute (capture tag):
+  AssertEqual 'smartyDTags', SyntaxOf('capture', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('name=')
+  AssertEqual 'smartyString', SyntaxOf('foo')
+  AssertEqual 'smartyProperty', SyntaxOf('assign=')
+  AssertEqual 'smartyString', SyntaxOf('bar')
+  AssertEqual 'smartyDTags', SyntaxOf('capture', 2)
+
+############################################
+
+Given smarty (config_load tag):
+  {config_load file='colors.conf' section='customer'}
+
+Execute (config_load tag and attributes):
+  AssertEqual 'smartySTags', SyntaxOf('config_load')
+  AssertEqual 'smartyProperty', SyntaxOf('file=')
+  AssertEqual 'smartyString', SyntaxOf('colors.conf')
+  AssertEqual 'smartyProperty', SyntaxOf('section=')
+  AssertEqual 'smartyString', SyntaxOf('customer')
+
+############################################
+
+Given smarty (debug tag):
+  {debug output='html'}
+
+Execute (debug tag):
+  AssertEqual 'smartySTags', SyntaxOf('debug')
+  AssertEqual 'smartyProperty', SyntaxOf('output=')
+  AssertEqual 'smartyString', SyntaxOf('html')
+
+############################################
+
+Given smarty (extends tag):
+  {extends file='parent.tpl'}
+
+Execute (extends tag):
+  AssertEqual 'smartySTags', SyntaxOf('extends')
+  AssertEqual 'smartyProperty', SyntaxOf('file=')
+  AssertEqual 'smartyString', SyntaxOf('parent.tpl')
+
+############################################
+
+# step can be written with or without =
+Given smarty (for tag with to and step):
+  {for $i=1 to 10 step=2 max=5}
+    {$i}
+  {forelse}
+    none
+  {/for}
+
+Execute (for tag):
+  AssertEqual 'smartyDTags', SyntaxOf('for', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('i', 1)
+  AssertEqual 'smartyNumber', SyntaxOf('1')
+  AssertEqual 'smartyNumber', SyntaxOf('10')
+  AssertEqual 'smartyProperty', SyntaxOf('step=')
+  AssertEqual 'smartyNumber', SyntaxOf('2')
+  AssertEqual 'smartyProperty', SyntaxOf('max=')
+  AssertEqual 'smartyNumber', SyntaxOf('5')
+  AssertEqual 'smartyVariable', SyntaxOf('i', 2)
+  AssertEqual 'smartyConditional', SyntaxOf('forelse')
+  AssertEqual 'smartyDTags', SyntaxOf('for', 3)
+
+############################################
+
+Given smarty (foreach tag smarty 3 syntax):
+  {foreach $items as $item}
+    {break}
+    {continue}
+    {$item@key}
+    {$item@index}
+    {$item@iteration}
+    {$item@first}
+    {$item@last}
+    {$item@total}
+    {$item@show}
+  {foreachelse}
+    no items
+  {/foreach}
+
+Execute (foreach tag smarty 3 syntax):
+  AssertEqual 'smartyDRepeat', SyntaxOf('foreach', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('items')
+  AssertEqual 'smartyVariable', SyntaxOf('item')
+  AssertEqual 'smartyForeachConstruct', SyntaxOf('break')
+  AssertEqual 'smartyForeachConstruct', SyntaxOf('continue')
+  AssertEqual 'smartyForeachProperty', SyntaxOf('@key')
+  AssertEqual 'smartyForeachProperty', SyntaxOf('@index')
+  AssertEqual 'smartyForeachProperty', SyntaxOf('@iteration')
+  AssertEqual 'smartyForeachProperty', SyntaxOf('@first')
+  AssertEqual 'smartyForeachProperty', SyntaxOf('@last')
+  AssertEqual 'smartyForeachProperty', SyntaxOf('@total')
+  AssertEqual 'smartyForeachProperty', SyntaxOf('@show')
+  AssertEqual 'smartyDRepeat', SyntaxOf('foreachelse')
+  AssertEqual 'smartyDRepeat', SyntaxOf('foreach', 2)
+
+############################################
+
+Given smarty (foreach tag smarty 2 legacy syntax):
+  {foreach from=$items key='k' item='v' name='myloop'}
+    {$v}
+  {/foreach}
+
+Execute (foreach tag smarty 2 legacy syntax):
+  AssertEqual 'smartyDRepeat', SyntaxOf('foreach', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('from=')
+  AssertEqual 'smartyVariable', SyntaxOf('items')
+  AssertEqual 'smartyProperty', SyntaxOf('key=')
+  AssertEqual 'smartyString', SyntaxOf('k\>')
+  AssertEqual 'smartyProperty', SyntaxOf('item=')
+  AssertEqual 'smartyString', SyntaxOf('v\>')
+  AssertEqual 'smartyProperty', SyntaxOf('name=')
+  AssertEqual 'smartyString', SyntaxOf('myloop')
+  AssertEqual 'smartyVariable', SyntaxOf('v', 2)
+  AssertEqual 'smartyDRepeat', SyntaxOf('foreach', 2)
+
+############################################
+
+Given smarty (function tag):
+  {function name='menu' level=0}
+    {$level}
+  {/function}
+
+Execute (function tag):
+  AssertEqual 'smartyDTags', SyntaxOf('function', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('name=')
+  AssertEqual 'smartyString', SyntaxOf('menu')
+  AssertEqual 'smartyCProperty', SyntaxOf('level=')
+  AssertEqual 'smartyNumber', SyntaxOf('0')
+  AssertEqual 'smartyVariable', SyntaxOf('level', 2)
+  AssertEqual 'smartyDTags', SyntaxOf('function', 2)
+
+############################################
+
+Given smarty (if tag):
+  {if $condition}
+    text
+  {/if}
+
+Execute (condition are highlighted in if tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("condition")
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+
+############################################
+
+Given smarty (if tag):
+  {if $condition}
+    text
+  {else}
+    text2
+  {/if}
+
+Execute (condition are highlighted in if tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("condition")
+  AssertEqual 'smartyConditional', SyntaxOf('else', 1)
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+
+############################################
+
+Given smarty (elseif tag):
+  {if $condition}
+    text
+  {elseif $condition2}
+    text22
+  {/if}
+
+Execute (condition are highlighted in elsif tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("condition")
+  AssertEqual 'smartyConditional', SyntaxOf('elseif')
+  AssertEqual 'smartyVariable', SyntaxOf("condition2")
+  AssertEqual 'smartyConditional', SyntaxOf('if', 3)
+
+############################################
+
+Given smarty (else if tag):
+  {if $condition}
+    text
+  {else if $condition2}
+    text22
+  {/if}
+
+Execute (TODO: condition are highlighted in else if tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("condition")
+  AssertEqual 'smartyConditional', SyntaxOf('else')
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+  AssertEqual 'smartyVariable', SyntaxOf("condition2")
+  AssertEqual 'smartyConditional', SyntaxOf('if', 3)
+
+############################################
+
+Given smarty (include tag):
+  {include file='header.tpl' title='Main Page'}
+  {include 'header.tpl'}
+
+Execute (include tag):
+  AssertEqual 'smartySTags', SyntaxOf('include', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('file=')
+  AssertEqual 'smartyString', SyntaxOf('header.tpl', 1)
+  AssertEqual 'smartyCProperty', SyntaxOf('title=')
+  AssertEqual 'smartyString', SyntaxOf('Main Page')
+  AssertEqual 'smartySTags', SyntaxOf('include', 2)
+  AssertEqual 'smartyString', SyntaxOf('header.tpl', 2)
+
+############################################
+
+Given smarty (include_php tag):
+  {include_php file='nav.php' once=true}
+
+Execute (include_php tag):
+  AssertEqual 'smartySTags', SyntaxOf('include_php')
+  AssertEqual 'smartyProperty', SyntaxOf('file=')
+  AssertEqual 'smartyString', SyntaxOf('nav.php')
+  AssertEqual 'smartyProperty', SyntaxOf('once=')
+  AssertEqual 'smartyBoolean', SyntaxOf('true')
+
+############################################
+
+Given smarty (insert tag):
+  {insert name='getBanner' lid=$banner_id}
+
+Execute (insert tag):
+  AssertEqual 'smartySTags', SyntaxOf('insert')
+  AssertEqual 'smartyProperty', SyntaxOf('name=')
+  AssertEqual 'smartyString', SyntaxOf('getBanner')
+  AssertEqual 'smartyCProperty', SyntaxOf('lid=')
+  AssertEqual 'smartyVariable', SyntaxOf('banner_id')
+
+############################################
+
+Given smarty (ldelim and rdelim tags):
+  {ldelim}func{rdelim}
+
+Execute (ldelim and rdelim tags):
+  AssertEqual 'smartySTags', SyntaxOf('ldelim')
+  AssertEqual 'smartySTags', SyntaxOf('rdelim')
+
+############################################
+
+Given smarty (literal tag):
+  {literal}
+    function test() { return 1; }
+  {/literal}
+
+Execute (literal tag):
+  AssertEqual 'smartyDTags', SyntaxOf('literal', 1)
+  AssertEqual 'smartyDTags', SyntaxOf('literal', 2)
+
+############################################
+
+Given smarty (nocache tag):
+  {nocache}
+    {$current_time}
+  {/nocache}
+
+Execute (nocache tag):
+  AssertEqual 'smartyDTags', SyntaxOf('nocache', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('current_time')
+  AssertEqual 'smartyDTags', SyntaxOf('nocache', 2)
+
+############################################
+
+Given smarty (section tag):
+  {section name='customer' loop=$custid start=0 step=1 max=10 show=true}
+    {$custid[customer]}
+  {sectionelse}
+    none
+  {/section}
+
+Execute (section tag):
+  AssertEqual 'smartyDRepeat', SyntaxOf('section', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('name=')
+  AssertEqual 'smartyString', SyntaxOf('customer', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('loop=')
+  AssertEqual 'smartyVariable', SyntaxOf('custid', 1)
+  AssertEqual 'smartyProperty', SyntaxOf('start=')
+  AssertEqual 'smartyNumber', SyntaxOf('0')
+  AssertEqual 'smartyProperty', SyntaxOf('step=')
+  AssertEqual 'smartyNumber', SyntaxOf('1')
+  AssertEqual 'smartyProperty', SyntaxOf('max=')
+  AssertEqual 'smartyNumber', SyntaxOf('10')
+  AssertEqual 'smartyProperty', SyntaxOf('show=')
+  AssertEqual 'smartyBoolean', SyntaxOf('true')
+  AssertEqual 'smartyVariable', SyntaxOf('custid', 2)
+  AssertEqual 'smartyDRepeat', SyntaxOf('sectionelse')
+  AssertEqual 'smartyDRepeat', SyntaxOf('section', 2)
+
+############################################
+
+Given smarty (setfilter tag):
+  {setfilter htmlspecialchars}
+    {$foo}
+  {/setfilter}
+
+Execute (setfilter tag):
+  AssertEqual 'smartyDTags', SyntaxOf('setfilter', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('foo')
+  AssertEqual 'smartyDTags', SyntaxOf('setfilter', 2)
+
+############################################
+
+Given smarty (strip tag):
+  {strip}
+    <div>
+      <span>test</span>
+    </div>
+  {/strip}
+
+Execute (strip tag):
+  AssertEqual 'smartyDTags', SyntaxOf('strip', 1)
+  AssertEqual 'smartyDTags', SyntaxOf('strip', 2)
+
+############################################
+
+Given smarty (while tag):
+  {while $foo > 0}
+    {$foo--}
+  {/while}
+
+Execute (while tag):
+  AssertEqual 'smartyDRepeat', SyntaxOf('while', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('foo', 1)
+  AssertEqual 'smartyOperator', SyntaxOf('>')
+  AssertEqual 'smartyNumber', SyntaxOf('0')
+  AssertEqual 'smartyVariable', SyntaxOf('foo', 2)
+  AssertEqual 'smartyDRepeat', SyntaxOf('while', 2)

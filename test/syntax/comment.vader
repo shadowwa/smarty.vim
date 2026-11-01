@@ -38,14 +38,14 @@ Given smarty (commented html code):
   *}
   outside
 
-Execute (commented code detected as comment):
+Execute (commented html detected as comment):
   AssertEqual 'smartyComment', SyntaxOf("commented")
   AssertEqual 'smartyComment', SyntaxOf("indiv")
   AssertNotEqual 'smartyComment', SyntaxOf("outside")
 
 ############################################
 
-Given smarty (commented html code):
+Given smarty (commented html and javascript code):
   <script>
     {* commented javascript code
     let jsvar = "foo"
@@ -53,7 +53,7 @@ Given smarty (commented html code):
     let outside = 2
   </script>
 
-Execute (commented code detected as comment):
+Execute (commented javascript detected as comment):
   AssertEqual 'smartyComment', SyntaxOf("commented")
   AssertEqual 'smartyComment', SyntaxOf("jsvar")
   AssertNotEqual 'smartyComment', SyntaxOf("outside")

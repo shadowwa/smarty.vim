@@ -1,0 +1,37 @@
+Execute (setup indent configuration):
+  set expandtab
+  set shiftwidth=4
+  set tabstop=4
+  set softtabstop=4
+  let g:smarty_indent_block=1
+
+Given smarty (smarty condition inlined in html tag template):
+  {if $user_profile.option_a == 1}
+      <option value="opt_a"
+          {if !empty($searchform.opt_a)}selected{/if}>Option A
+      </option>
+  {/if}
+  {if $user_profile.option_b == 1}
+      <option value="opt_b"
+          {if !empty($searchform.opt_b)}selected{/if}>
+              Option B Description
+      </option>
+  {/if}
+
+Do (TODO: Indent the whole buffer):
+  gg=G
+
+Expect smarty (smarty condition inlined in html tag result):
+  {if $user_profile.option_a == 1}
+      <option value="opt_a"
+          {if !empty($searchform.opt_a)}selected{/if}>Option A
+      </option>
+  {/if}
+  {if $user_profile.option_b == 1}
+      <option value="opt_b"
+          {if !empty($searchform.opt_b)}selected{/if}>
+              Option B Description
+      </option>
+  {/if}
+
+############################################

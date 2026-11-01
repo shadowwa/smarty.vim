@@ -1,0 +1,124 @@
+Given smarty (arithmetic operators):
+  {if $x + $y - $z * $w / $v % 2}
+  {/if}
+
+Execute (arithmetic operators):
+  AssertEqual 'smartyOperator', SyntaxOf('%')
+
+############################################
+
+Given smarty (comparison operators symbolic):
+  {if $a == $b && $c != $d || $e === $f && $g < $h && $i > $j}
+  {/if}
+
+Execute (symbolic comparison operators):
+  AssertEqual 'smartyOperator', SyntaxOf('==', 1)
+  AssertEqual 'smartyOperator', SyntaxOf('&&', 1)
+  AssertEqual 'smartyOperator', SyntaxOf('!=')
+  AssertEqual 'smartyOperator', SyntaxOf('||')
+  AssertEqual 'smartyOperator', SyntaxOf('===')
+  AssertEqual 'smartyOperator', SyntaxOf('<')
+  AssertEqual 'smartyOperator', SyntaxOf('>')
+
+############################################
+
+# SyntaxOf return a string with the name of the syntax group _at the first character_
+# if part of the string have a different group is is not detected
+Given smarty (comparison operators symbolic splitted):
+  {if $k <= $l && $m >= $n}
+  {/if}
+
+Execute (TODO: symbolic comparison operators splitted):
+  AssertEqual 'smartyOperator', SyntaxOf('<')
+  AssertEqual 'smartyOperator', SyntaxOf('=', 1)
+  AssertEqual 'smartyOperator', SyntaxOf('>')
+  AssertEqual 'smartyOperator', SyntaxOf('=', 2)
+
+############################################
+
+Given smarty (comparison operators textual):
+  {if $a eq $b && $c ne $d && $e neq $f && $g gt $h && $i ge $j && $k gte $l && $m lt $n && $o le $p && $q lte $r}
+  {/if}
+
+Execute (textual comparison operators):
+  AssertEqual 'smartyOperator', SyntaxOf('\<eq')
+  AssertEqual 'smartyOperator', SyntaxOf('ne\>')
+  AssertEqual 'smartyOperator', SyntaxOf('neq')
+  AssertEqual 'smartyOperator', SyntaxOf('gt\>')
+  AssertEqual 'smartyOperator', SyntaxOf('ge')
+  AssertEqual 'smartyOperator', SyntaxOf('gte')
+  AssertEqual 'smartyOperator', SyntaxOf('lt\>')
+  AssertEqual 'smartyOperator', SyntaxOf('le')
+  AssertEqual 'smartyOperator', SyntaxOf('lte')
+
+############################################
+
+Given smarty (logical negation and mod operators):
+  {if not $a && ! $b && $c mod 2 eq 0}
+  {/if}
+
+Execute (not and mod operators):
+  AssertEqual 'smartyOperator', SyntaxOf('not')
+  AssertEqual 'smartyOperator', SyntaxOf('!')
+  AssertEqual 'smartyOperator', SyntaxOf('mod')
+
+############################################
+
+Given smarty (is even and is odd operators):
+  {if $a is even && $b is odd}
+  {/if}
+
+Execute (is even and is odd):
+  AssertEqual 'smartyOperator', SyntaxOf('is even')
+  AssertEqual 'smartyOperator', SyntaxOf('is odd')
+
+############################################
+
+Given smarty (is not even and is not odd operators):
+  {if $a is not even && $b is not odd}
+  {/if}
+
+Execute (is not even and is not odd):
+  AssertEqual 'smartyOperator', SyntaxOf('is not even')
+  AssertEqual 'smartyOperator', SyntaxOf('is not odd')
+
+############################################
+
+Given smarty (div by and even by and odd by operators):
+  {if $a is div by 4 && $b is not div by 2 && $c is even by 3 && $d is not odd by 5}
+  {/if}
+
+Execute (div by, even by, odd by):
+  AssertEqual 'smartyOperator', SyntaxOf('is div by')
+  AssertEqual 'smartyOperator', SyntaxOf('is not div by')
+  AssertEqual 'smartyOperator', SyntaxOf('is even by')
+  AssertEqual 'smartyOperator', SyntaxOf('is not odd by')
+
+############################################
+
+Given smarty (matches regular expression operator):
+  {if $a matches '/^foo/'}
+  {/if}
+
+Execute (matches operator):
+  AssertEqual 'smartyOperator', SyntaxOf('matches')
+  AssertEqual 'smartyString', SyntaxOf('/^foo/')
+
+############################################
+
+Given smarty (ternary operator):
+  {$test ? "OK" : "FAIL"}
+  {$myVar ?: "empty"}
+
+Execute (TODO: ternary operator):
+  AssertEqual 'smartyOperator', SyntaxOf('?:')
+  AssertEqual 'smartyString', SyntaxOf('empty')
+
+############################################
+
+Given smarty (null coalescing operator):
+  {$myVar ?? "empty"}
+
+Execute (TODO: null coalescing operator):
+  AssertEqual 'smartyOperator', SyntaxOf('??')
+  AssertEqual 'smartyString', SyntaxOf('empty')
