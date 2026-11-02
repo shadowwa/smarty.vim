@@ -108,17 +108,24 @@ Execute (matches operator):
 
 Given smarty (ternary operator):
   {$test ? "OK" : "FAIL"}
+  {$myVar ?: 'empty'}
   {$myVar ?: "empty"}
 
-Execute (TODO: ternary operator):
-  AssertEqual 'smartyOperator', SyntaxOf('?:')
-  AssertEqual 'smartyString', SyntaxOf('empty')
+Execute (ternary operator):
+  AssertEqual 'smartyOperator', SyntaxOf('?')
+  AssertEqual 'smartyOperator', SyntaxOf('?:', 1)
+  AssertEqual 'smartyString', SyntaxOf('empty', 1)
+  AssertEqual 'smartyOperator', SyntaxOf('?:', 2)
+  AssertEqual 'smartyStringDouble', SyntaxOf('empty', 2)
 
 ############################################
 
 Given smarty (null coalescing operator):
+  {$myVar ?? 'empty'}
   {$myVar ?? "empty"}
 
-Execute (TODO: null coalescing operator):
-  AssertEqual 'smartyOperator', SyntaxOf('??')
-  AssertEqual 'smartyString', SyntaxOf('empty')
+Execute (null coalescing operator):
+  AssertEqual 'smartyOperator', SyntaxOf('??', 1)
+  AssertEqual 'smartyString', SyntaxOf('empty', 1)
+  AssertEqual 'smartyOperator', SyntaxOf('??', 2)
+  AssertEqual 'smartyStringDouble', SyntaxOf('empty', 2)
