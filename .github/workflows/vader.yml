@@ -1,5 +1,9 @@
 name: Tests on vim and neovim
 
+permissions:
+  contents: read
+  pull-requests: write
+
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
@@ -43,9 +47,10 @@ jobs:
         # mantic:           vim 9.0.1672    neovim 0.7.2
         # noble:            vim 9.1.0016    neovim 0.9.5 <- vim version currently used by github action as vim-stable
         # mageia 9:         vim 9.1.071     neovim 0.9.5
-        # mageia cauldron:  vim 9.1.1122    neovim 0.10.4
+        # mageia 10:        vim 9.2.1209    neovim 0.11.5
+        # mageia cauldron:  vim 9.2.1209    neovim 0.12.4
         # neovim < 0.9.0 segfaut on github action (even the one installed from apt)
-        editor: ["vim-v8.0.0000", "vim-v8.2.2434", "vim-v9.1.1122", "nvim-v0.9.0", "nvim-v0.9.5", "nvim-v0.10.4"]
+        editor: ["vim-v8.0.0000", "vim-v8.2.2434", "vim-v9.1.1122", "vim-9.2.1209", "nvim-v0.9.5", "nvim-v0.11.5", "nvim-v0.12.4"]
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
