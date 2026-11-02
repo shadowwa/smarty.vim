@@ -24,6 +24,25 @@ Expect smarty (very basic indentation result):
 
 ############################################
 
+Given smarty (very basic indentation with else if):
+  {if $test}
+  black
+  {else if $test2}
+  white
+  {/if}
+
+Do (Indent the whole buffer):
+  gg=G
+
+Expect smarty (very basic indentation result with else if):
+  {if $test}
+      black
+  {else if $test2}
+      white
+  {/if}
+
+############################################
+
 Given smarty (non indented smarty template):
   <td>
   {if $test}

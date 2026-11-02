@@ -244,7 +244,7 @@ Given smarty (else if tag):
     text22
   {/if}
 
-Execute (TODO: condition are highlighted in else if tag):
+Execute (condition are highlighted in else if tag):
   AssertEqual 'smartyConditional', SyntaxOf('if', 1)
   AssertEqual 'smartyVariable', SyntaxOf("condition")
   AssertEqual 'smartyConditional', SyntaxOf('else')
