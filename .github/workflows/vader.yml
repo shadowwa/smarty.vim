@@ -13,22 +13,22 @@ jobs:
     name: Lint code with Vint and shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # There exists a vint github action but it can't install the alpha
       # version. vint has not been moving since 2020 and we need to use the
       # alpha release since it fixed some things wrt the latest stable release.
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.0.0
         with:
           python-version: '3.10'
       - name: Install vint
         run: pip install --pre vim-vint
       - name: Lint vimscript files
         run: vint --warning --enable-neovim ./ftdetect ./ftplugin ./indent ./syntax
-      - uses: lunarmodules/luacheck@v1
+      - uses: lunarmodules/luacheck@cc089e3f65acdd1ef8716cc73a3eca24a6b845e4 # v1
       - name: Lint shell scripts
-        uses: ludeeus/action-shellcheck@master
+        uses: ludeeus/action-shellcheck@00b27aa7cb85167568cb48a3838b75f4265f2bca # master
       - name: Lint Markdown files
-        uses: DavidAnson/markdownlint-cli2-action@v24
+        uses: DavidAnson/markdownlint-cli2-action@21c1be1b93ad9ed58fa840aacc3f279cde2a72ff #v24
 
   tests:
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
         editor: ["vim-v8.0.0000", "vim-v8.2.2434", "vim-v9.1.1122", "nvim-v0.9.0", "nvim-v0.9.5", "nvim-v0.10.4"]
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: get editor name
         env:
           EDITORVERSION: ${{matrix.editor}}
@@ -57,7 +57,7 @@ jobs:
           echo "SELECTEDEDITOR=${EDITORVERSION%%-*}" >> $GITHUB_ENV
           echo "SELECTEDVERSION=${EDITORVERSION##*-}" >> $GITHUB_ENV
       - name: Setup ${{ matrix.editor }}
-        uses: rhysd/action-setup-vim@v1
+        uses: rhysd/action-setup-vim@febef33995d6649302e9d88dda81e071b68f16a7 # v1
         id: vim
         with:
           neovim: ${{ env.SELECTEDEDITOR == 'nvim' }}
