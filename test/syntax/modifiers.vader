@@ -7,7 +7,7 @@ Given smarty (simple modifier):
   {$words|count_sentences}
   {$words|count_words}
 
-Execute (TODO: character and word modifiers):
+Execute (character and word modifiers):
   AssertEqual 'smartyModifier', SyntaxOf('capitalize')
   AssertEqual 'smartyModifier', SyntaxOf('cat')
   AssertEqual 'smartyStringDouble', SyntaxOf('world')
@@ -227,8 +227,10 @@ Given smarty (round modifier):
   {3.14|round}
   {3.141592|round:2}
 
-Execute (TODO: round modifiers):
+Execute (round modifiers):
+  AssertEqual 'smartyNumber', SyntaxOf('3.14')
   AssertEqual 'smartyModifier', SyntaxOf('round', 1)
+  AssertEqual 'smartyNumber', SyntaxOf('3.141592')
   AssertEqual 'smartyModifier', SyntaxOf('round', 2)
 
 ############################################
@@ -284,7 +286,7 @@ Given smarty (strip and strip_tags modifiers):
   {$articleTitle|strip_tags}
   {$articleTitle|strip_tags:false}
 
-Execute (TODO: strip modifiers):
+Execute (strip modifiers):
   AssertEqual 'smartyModifier', SyntaxOf('strip', 1)
   AssertEqual 'smartyModifier', SyntaxOf('strip', 2)
   AssertEqual 'smartyStringDouble', SyntaxOf('&nbsp;')
@@ -298,9 +300,10 @@ Given smarty (strlen modifier):
   {"Smarty"|strlen}
   {156|strlen}
 
-Execute (TODO: strlen modifier):
+Execute (strlen modifier):
   AssertEqual 'smartyStringDouble', SyntaxOf('Smarty')
   AssertEqual 'smartyModifier', SyntaxOf('strlen', 1)
+  AssertEqual 'smartyNumber', SyntaxOf('156')
   AssertEqual 'smartyModifier', SyntaxOf('strlen', 2)
 
 ############################################
@@ -324,7 +327,7 @@ Given smarty (truncate modifier):
   {$articleTitle|truncate:30:"foo":true}
   {$articleTitle|truncate:30:"foo":true:true}
 
-Execute (TODO: truncate modifier):
+Execute (truncate modifier):
   AssertEqual 'smartyModifier', SyntaxOf('truncate', 1)
   AssertEqual 'smartyModifier', SyntaxOf('truncate', 2)
   AssertEqual 'smartyParameter', SyntaxOf('30', 1)
@@ -363,7 +366,7 @@ Given smarty (wordwrap modifier):
   {$articleTitle|wordwrap:20:"\n"}
   {$articleTitle|wordwrap:30:"<br />\n":true}
 
-Execute (TODO: wordwrap modifier):
+Execute (wordwrap modifier):
   AssertEqual 'smartyModifier', SyntaxOf('wordwrap', 1)
   AssertEqual 'smartyParameter', SyntaxOf('30', 1)
   AssertEqual 'smartyModifier', SyntaxOf('wordwrap', 2)

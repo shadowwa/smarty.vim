@@ -106,14 +106,29 @@ Execute (backtick variable):
 
 Given smarty (numbers decimal and hexadecimal):
   {assign var='dec' value=123}
+  {assign var='neg' value=-456}
+  {assign var='float' value=3.14}
+  {assign var='neg_float' value=-0.5}
   {assign var='hex' value=0x1f}
   {if $x == 456}
+  {/if}
+  {if $x == -456}
+  {/if}
+  {if $x == 3.14}
+  {/if}
+  {if $x == -0.5}
   {/if}
 
 Execute (numbers):
   AssertEqual 'smartyNumber', SyntaxOf('123')
+  AssertEqual 'smartyNumber', SyntaxOf('-456', 1)
+  AssertEqual 'smartyNumber', SyntaxOf('3.14', 1)
+  AssertEqual 'smartyNumber', SyntaxOf('-0.5', 1)
   AssertEqual 'smartyNumber', SyntaxOf('0x1f')
-  AssertEqual 'smartyNumber', SyntaxOf('456')
+  AssertEqual 'smartyNumber', SyntaxOf('456', 1)
+  AssertEqual 'smartyNumber', SyntaxOf('-456', 2)
+  AssertEqual 'smartyNumber', SyntaxOf('3.14', 2)
+  AssertEqual 'smartyNumber', SyntaxOf('-0.5', 2)
 
 ############################################
 

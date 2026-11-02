@@ -222,7 +222,7 @@ syn match   smartyConstant contained "\$smarty"
 syn keyword smartyTodo     contained FIXME NOTE TODO OPTIMIZE XXX
 
 " Number
-syn match smartyNumber "-\=\<\d\+\>" contained display
+syn match smartyNumber "\(-\|\<\)\d\+\(\.\d\+\)\?\>" contained display
 syn match smartyNumber "\<0x\x\{1,8}\>"  contained display
 
 " Boolean
@@ -253,9 +253,9 @@ syn region smartyInBacktick   contained matchgroup=Constant start=+\`+ end=+\`+ 
 syn region smartyString       contained matchgroup=Constant start=+'+  end=+'+ skip=+\\'+ contains=smartyMaybeVariable, smartyInBacktick, smartyMaybeDollarSign keepend
 syn region smartyStringDouble contained matchgroup=Constant start=+"+  end=+"+ skip=+\\"+ contains=smartyMaybeVariable, smartyInBacktick, smartyMaybeDollarSign keepend
 syn region smartyModifier     contained matchgroup=Statement start=+||\@!+ end=+\ze:\|\>+
-syn region smartyParameter    contained matchgroup=Statement start=+:+     end=+\ze\(}\||\)+ contains=smartyVariable, smartyDollarSign, smartyGlue, smartyInBracket, smartyString, smartyStringDouble contained
+syn region smartyParameter    contained matchgroup=Statement start=+:+     end=+\ze\(}\||\)+ contains=smartyVariable, smartyDollarSign, smartyGlue, smartyInBracket, smartyString, smartyStringDouble, smartyBoolean contained
 
-syn region smartySimpleTag start="{\s\{-}[a-z$'"#]\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyHashSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartySTags, smartyConstant, smartySRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyTodo, smartyForeachConstruct
+syn region smartySimpleTag start="{\s\{-}[a-z0-9$'"#\-]\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyHashSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartySTags, smartyConstant, smartySRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyTodo, smartyForeachConstruct
 syn region smartyStartTag  start="{\<\(block\|capture\|for\|foreach\|function\|if\|literal\|nocache\|php\|section\|setfilter\|strip\|textformat\|while\)\>\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyHashSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyDTags, smartyConstant, smartyDRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyConditional, smartyOperator containedin=@htmlJavaScript
 syn region smartyMiddleTag start="{\(elseif\)\@=" end="}" contains=smartyParameter, smartyCProperty, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyHashSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyDTags, smartyConstant, smartyDRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyConditional, smartyOperator containedin=@htmlJavaScript
 syn region smartyMiddleTag start="{\(else\|foreachelse\|forelse\|sectionelse\)\>" end="}" contains=smartyConditional, smartyDRepeat containedin=@htmlJavaScript
