@@ -84,7 +84,7 @@ function! GetSmartyHtmlIndent(lnum)
 
           return indent(prevnonblank(v:lnum-1))
       elseif csyn ==# 'smartyEndTag' || csyn ==# 'smartyMiddleTag'
-          if syn ==# 'smartyStartTag' && !(line =~? '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
+          if (syn ==# 'smartyStartTag' || syn ==# 'smartyMiddleTag') && !(line =~? '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
               return indent(prevnonblank(v:lnum-1))
           endif
 

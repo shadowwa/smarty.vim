@@ -49,9 +49,9 @@ Given smarty (non indented smarty template):
   black
   {else}
   {/if}
-  <td>
+  </td>
 
-Do (TODO: Indent the whole buffer):
+Do (Indent the whole buffer):
   gg=G
 
 Expect smarty (if else with empty branch in html tag indentation result):
