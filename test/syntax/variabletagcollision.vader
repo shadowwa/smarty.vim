@@ -1,0 +1,120 @@
+Given smarty (variable with name same as a sigle tag):
+  {if $call.index != ""}
+      {$call.index}
+  {/if}
+
+Execute (highlighted variable as variable, not as tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("call", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("call", 2)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 2)
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+
+############################################
+
+Given smarty (variable with name same as a double tag):
+  {if $block.index != ""}
+      {$block.index}
+  {/if}
+
+Execute (highlighted variable as variable, not as tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("block", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("block", 2)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 2)
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+
+############################################
+
+Given smarty (variable with name same as a conditionnal tag):
+  {if $else.index != ""}
+      {$else.index}
+  {/if}
+
+Execute (highlighted variable as variable, not as tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("else", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("else", 2)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 2)
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+
+############################################
+
+Given smarty (variable with name same as a single repeat tag):
+  {if $cycle.index != ""}
+      {$cycle.index}
+  {/if}
+
+Execute (highlighted variable as variable, not as tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("cycle", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("cycle", 2)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 2)
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+
+############################################
+
+Given smarty (variable with name same as a double repeat tag):
+  {if $foreach.index != ""}
+      {$foreach.index}
+  {/if}
+
+Execute (highlighted variable as variable, not as tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("foreach", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("foreach", 2)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 2)
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+
+############################################
+
+Given smarty (variable with name same as a foreach construct tag):
+  {if $break.index != ""}
+      {$break.index}
+  {/if}
+
+Execute (highlighted variable as variable, not as tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("break", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("break", 2)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 2)
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+
+############################################
+
+Given smarty (variable with name same as a todo tag):
+  {if $TODO.index != ""}
+      {$TODO.index}
+  {/if}
+
+Execute (highlighted variable as variable, not as tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("TODO", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("TODO", 2)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 2)
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+
+############################################
+
+Given smarty (variable with name same as a boolean tag):
+  {if $true.index != ""}
+      {$true.index}
+  {/if}
+
+Execute (highlighted variable as variable, not as tag):
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyVariable', SyntaxOf("true", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 1)
+  AssertEqual 'smartyVariable', SyntaxOf("true", 2)
+  AssertEqual 'smartyVariable', SyntaxOf("index", 2)
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+
+############################################
+

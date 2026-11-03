@@ -236,7 +236,7 @@ syn match  smartyOperator contained  " \@<=is\( not\)\? \(div by\|even by\|odd b
 syn match  smartyGlue     contained "\.\|\->"
 
 " Dollar
-syn match smartyDollarSign      contained "\$" " nextgroup=smartyVariable
+syn match smartyDollarSign      contained "\$" nextgroup=smartyVariable
 syn match smartyMaybeDollarSign contained "\([^\\]\|\\\\\)\@<=\$"
 
 " Hash
