@@ -2,14 +2,24 @@ Given smarty (array indexing):
   {$foo[0]}
   {$foo['bar']}
   {$foo["bar"]}
-  {$foo[$bar]}
 
 Execute (array index):
   AssertEqual 'smartyVariable', SyntaxOf('foo', 1)
   AssertEqual 'smartyVariable', SyntaxOf('foo', 2)
+  AssertEqual 'smartyInBracket', SyntaxOf('bar', 1)
   AssertEqual 'smartyVariable', SyntaxOf('foo', 3)
-  AssertEqual 'smartyVariable', SyntaxOf('foo', 4)
-  AssertEqual 'smartyVariable', SyntaxOf('bar', 3)
+  AssertEqual 'smartyInBracket', SyntaxOf('bar', 2)
+
+############################################
+
+Given smarty (array indexing with array index):
+  {$foo[$bar]}
+
+Execute (array index):
+  AssertEqual 'smartyDollarSign', SyntaxOf('\$', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('foo')
+  AssertEqual 'smartyDollarSign', SyntaxOf('\$', 2)
+  AssertEqual 'smartyVariable', SyntaxOf('bar')
 
 ############################################
 
