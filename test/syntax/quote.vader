@@ -29,3 +29,114 @@ Execute (string in double quote):
   AssertEqual 'smartyStringDouble', SyntaxOf("escaped")
 
 ############################################
+
+Given smarty (variable in double quotes):
+  {include file="subdir/$tpl_name.tpl"}
+
+Execute (variable in double quotes):
+  AssertEqual 'smartyMaybeDollarSign', SyntaxOf('\$')
+  AssertEqual 'smartyMaybeVariable', SyntaxOf('tpl_name')
+  AssertEqual 'smartyStringDouble', SyntaxOf('\.tpl')
+
+############################################
+
+Given smarty (no variable interpolation in simple quotes):
+  {include file='subdir/$tpl_name.tpl'}
+
+Execute (no variable interpolation in simple quotes):
+  AssertEqual 'smartyString', SyntaxOf('\$')
+  AssertEqual 'smartyString', SyntaxOf('tpl_name')
+  AssertEqual 'smartyString', SyntaxOf('\.tpl')
+
+############################################
+
+Given smarty (not dot interpolation in double quote):
+  {func var="test $foo.bar test"}
+
+Execute (not dot interpolation in double quote):
+  AssertEqual 'smartyMaybeDollarSign', SyntaxOf('\$')
+  AssertEqual 'smartyMaybeVariable', SyntaxOf('foo')
+  AssertEqual 'smartyStringDouble', SyntaxOf('bar')
+
+############################################
+
+Given smarty (dot interpolation in double quote and backtick):
+  {func var="test `$foo.bar` test"}
+
+Execute (dot interpolation in double quote and backtick):
+  AssertEqual 'smartyDollarSign', SyntaxOf('\$')
+  AssertEqual 'smartyVariable', SyntaxOf('foo')
+  AssertEqual 'smartyVariable', SyntaxOf('bar')
+
+############################################
+
+Given smarty (array in double quote and backtick):
+  {func var="test `$foo[0]` test"}
+  {func var="test `$foo[bar]` test"}
+
+Execute (array in double quote and backtick):
+  AssertEqual 'smartyInBracket', SyntaxOf('0')
+  AssertEqual 'smartyInBracket', SyntaxOf('bar')
+
+############################################
+
+Given smarty (backtick variable embedding in double quotes):
+  {assign var='greeting' value="Hello `$user->name` welcome"}
+  {assign var='msg' value="The count is `$count`."}
+
+Execute (backtick variable):
+  AssertEqual 'Constant', SyntaxOf('`', 1)
+  AssertEqual 'smartyVariable', SyntaxOf('user')
+  AssertEqual 'Constant', SyntaxOf('`', 2)
+  AssertEqual 'Constant', SyntaxOf('`', 3)
+  AssertEqual 'smartyVariable', SyntaxOf('count', 2)
+  AssertEqual 'Constant', SyntaxOf('`', 4)
+
+############################################
+
+Given smarty (modifiers inside quotes):
+  {func var="test `$foo.bar` test"|escape}
+
+Execute (modifiers inside quotes):
+  AssertEqual 'smartyModifier', SyntaxOf('escape')
+
+############################################
+
+Given smarty (modifiers outside quotes):
+  {func var="test {$foo|escape} test"}
+
+Execute (modifiers outside quotes):
+  AssertEqual 'smartyModifier', SyntaxOf('escape')
+
+############################################
+
+# TODO
+#Given smarty (PHP function result):
+#  {func var="test {time()} test"}
+
+#Execute (PHP function result):
+#  AssertEqual '???', SyntaxOf('time')
+
+############################################
+
+Given smarty (plugin result):
+  {func var="test {counter} test"}
+
+Execute (plugin result):
+  AssertEqual 'smartySRepeat', SyntaxOf('counter')
+
+############################################
+
+Given smarty (Smarty block function):
+  {func var="variable foo is {if !$foo}not {/if} defined"}
+
+Execute (Smarty block function):
+  AssertEqual 'smartyStringDouble', SyntaxOf('foo', 1)
+  AssertEqual 'smartyConditional', SyntaxOf('if', 1)
+  AssertEqual 'smartyDollarSign', SyntaxOf('\$')
+  AssertEqual 'smartyVariable', SyntaxOf('foo', 2)
+  AssertEqual 'smartyStringDouble', SyntaxOf('not')
+  AssertEqual 'smartyConditional', SyntaxOf('if', 2)
+  AssertEqual 'smartyStringDouble', SyntaxOf('defined')
+
+############################################

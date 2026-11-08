@@ -249,9 +249,9 @@ syn match smartyMaybeVariable   contained "\(\(^\|[^\\]\|\\\\\)\$\)\@<=\h\w*"
 syn match smartyEscapedVariable contained "\\$\h\w*"
 
 syn region smartyInBracket    contained matchgroup=Constant start=+\[+ end=+\]+ contains=smartyDollarSign, smartyVariable
-syn region smartyInBacktick   contained matchgroup=Constant start=+\`+ end=+\`+ contains=smartyVariable
-syn region smartyString       contained matchgroup=Constant start=+'+  end=+'+ skip=+\\'+ contains=smartyMaybeVariable, smartyInBacktick, smartyMaybeDollarSign keepend
-syn region smartyStringDouble contained matchgroup=Constant start=+"+  end=+"+ skip=+\\"+ contains=smartyMaybeVariable, smartyInBacktick, smartyMaybeDollarSign keepend
+syn region smartyInBacktick   contained matchgroup=Constant start=+\`+ end=+\`+ contains=smartyDollarSign, smartyVariable, smartyInBracket
+syn region smartyString       contained matchgroup=Constant start=+'+  end=+'+ skip=+\\'+ contains=smartyInBacktick keepend
+syn region smartyStringDouble contained matchgroup=Constant start=+"+  end=+"+ skip=+\\"+ contains=smartyMaybeVariable, smartyInBacktick, smartyMaybeDollarSign, smartyStartTag, smartyEndTag, smartySimpleTag keepend
 syn region smartyModifier     contained matchgroup=Statement start=+||\@!+ end=+\ze:\|\>+
 syn region smartyParameter    contained matchgroup=Statement start=+:+     end=+\ze\(}\||\)+ contains=smartyVariable, smartyDollarSign, smartyGlue, smartyInBracket, smartyString, smartyStringDouble, smartyBoolean contained
 

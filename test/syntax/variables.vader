@@ -100,20 +100,6 @@ Execute ($smarty reserved variable):
 
 ############################################
 
-Given smarty (backtick variable embedding in double quotes):
-  {assign var='greeting' value="Hello `$user->name` welcome"}
-  {assign var='msg' value="The count is `$count`."}
-
-Execute (backtick variable):
-  AssertEqual 'Constant', SyntaxOf('`', 1)
-  AssertEqual 'smartyVariable', SyntaxOf('user')
-  AssertEqual 'Constant', SyntaxOf('`', 2)
-  AssertEqual 'Constant', SyntaxOf('`', 3)
-  AssertEqual 'smartyVariable', SyntaxOf('count', 2)
-  AssertEqual 'Constant', SyntaxOf('`', 4)
-
-############################################
-
 Given smarty (numbers decimal and hexadecimal):
   {assign var='dec' value=123}
   {assign var='neg' value=-456}
