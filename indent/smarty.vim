@@ -33,94 +33,94 @@ let b:did_indent = 1
 setlocal indentexpr=GetSmartyHtmlIndent(v:lnum)
 
 
-function! s:handle(lnum, ft, searchpairargs)
+function! s:handle(lnum, ft, searchpairargs) abort
   " See if we're inside a subblock.
-  let save_cursor = getcurpos()
+  let l:save_cursor = getcurpos()
   exec a:lnum
-  let scriptlnum = call('searchpair', a:searchpairargs)
-  let prevlnum = prevnonblank(a:lnum)
-  call setpos('.', save_cursor)
+  let l:scriptlnum = call('searchpair', a:searchpairargs)
+  let l:prevlnum = prevnonblank(a:lnum)
+  call setpos('.', l:save_cursor)
 
   " If we're in a subblock and the previous line isn't the starting tag
   " itself, use its indenting.
-  if scriptlnum && scriptlnum != prevlnum
+  if l:scriptlnum && l:scriptlnum != l:prevlnum
     exec 'return ' s:indentexprs[a:ft]
   endif
   return ''
 endfun
 
-function! s:syn(lnum)
-  let nonemptycol=match(getline(a:lnum), '\S')+1
-  return synIDattr(synID(a:lnum,nonemptycol,1),'name')
+function! s:syn(lnum) abort
+  let l:nonemptycol=match(getline(a:lnum), '\S')+1
+  return synIDattr(synID(a:lnum, l:nonemptycol, 1), 'name')
 endfunction
 
-function! GetSmartyHtmlIndent(lnum)
-  let line  = getline(prevnonblank(a:lnum-1))
-  let cline = getline(a:lnum)
-  let nline = getline(nextnonblank(a:lnum+1))
-  let sw    = 0
-  let syn   = s:syn(prevnonblank(a:lnum-1))
-  let csyn  = s:syn(v:lnum)
-  let nsyn  = s:syn(nextnonblank(a:lnum+1))
+function! GetSmartyHtmlIndent(lnum) abort
+  let l:line  = getline(prevnonblank(a:lnum-1))
+  let l:cline = getline(a:lnum)
+  let l:nline = getline(nextnonblank(a:lnum+1))
+  let l:sw    = 0
+  let l:syn   = s:syn(prevnonblank(a:lnum-1))
+  let l:csyn  = s:syn(v:lnum)
+  let l:nsyn  = s:syn(nextnonblank(a:lnum+1))
 
   if g:smarty_indent_block
-      let sw = exists('*shiftwidth') ? shiftwidth() : shiftwidth()
+      let l:sw = exists('*shiftwidth') ? shiftwidth() : shiftwidth()
 
-      if csyn ==# 'smartyStartTag' || csyn ==# 'smartyMiddleTag'
+      if l:csyn ==# 'smartyStartTag' || l:csyn ==# 'smartyMiddleTag'
           call cursor(a:lnum, match(getline(a:lnum), '\S')+1)
-          let pairline = searchpair('{', '', '}', 'bW')
-          if pairline > 0
-              return sw + indent(pairline)
+          let l:pairline = searchpair('{', '', '}', 'bW')
+          if l:pairline > 0
+              return l:sw + indent(l:pairline)
           endif
       endif
-      if csyn ==# 'smartyStartTag'
-          if syn ==# 'htmlTag' || syn ==# 'htmlScriptTag'
-              let indent = call(substitute(s:indentexprs['html'], '(\|)', '', 'g'), [])
-              return indent
+      if l:csyn ==# 'smartyStartTag'
+          if l:syn ==# 'htmlTag' || l:syn ==# 'htmlScriptTag'
+              let l:indent = call(substitute(s:indentexprs['html'], '(\|)', '', 'g'), [])
+              return l:indent
           endif
-          if (syn ==# 'smartyStartTag' || syn ==# 'smartyMiddleTag') && !(line =~? '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
-              return sw + indent(prevnonblank(v:lnum-1))
+          if (l:syn ==# 'smartyStartTag' || l:syn ==# 'smartyMiddleTag') && !(l:line =~? '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
+              return l:sw + indent(prevnonblank(v:lnum-1))
           endif
 
           return indent(prevnonblank(v:lnum-1))
-      elseif csyn ==# 'smartyEndTag' || csyn ==# 'smartyMiddleTag'
-          if (syn ==# 'smartyStartTag' || syn ==# 'smartyMiddleTag') && !(line =~? '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
+      elseif l:csyn ==# 'smartyEndTag' || l:csyn ==# 'smartyMiddleTag'
+          if (l:syn ==# 'smartyStartTag' || l:syn ==# 'smartyMiddleTag') && !(l:line =~? '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
               return indent(prevnonblank(v:lnum-1))
           endif
 
-          return indent(prevnonblank(v:lnum-1)) - sw
+          return indent(prevnonblank(v:lnum-1)) - l:sw
       endif
   endif
 
   for [ft, args] in items(s:pairs)
-    let indent = call('s:handle', [a:lnum, ft, args])
-    if type(indent) == type(0)
+    let l:indent = call('s:handle', [a:lnum, ft, args])
+    if type(l:indent) == type(0)
       if g:smarty_indent_verbose
         echom 'Line ' . a:lnum . ': using ' . ft . ' indenting via ' . s:indentexprs[ft]
       endif
 
       if g:smarty_indent_block
           " Indent {php}
-          if cline =~# '\s*{php}\s*'
-            return sw + indent(prevnonblank(v:lnum-1))
+          if l:cline =~# '\s*{php}\s*'
+            return l:sw + indent(prevnonblank(v:lnum-1))
           endif
 
           " Indent/unindent {/php}
-          if cline =~# '\s*{/php}\s*'
-            if line =~# '\s*{php}\s*'
+          if l:cline =~# '\s*{/php}\s*'
+            if l:line =~# '\s*{php}\s*'
               return indent(prevnonblank(v:lnum-1))
             else
-              return indent(prevnonblank(v:lnum-1)) - sw
+              return indent(prevnonblank(v:lnum-1)) - l:sw
             endif
           endif
 
           " Indent line if previous line is {php}
-          if line =~# '\s*{php}\s*'
-            return sw + indent(prevnonblank(v:lnum-1))
+          if l:line =~# '\s*{php}\s*'
+            return l:sw + indent(prevnonblank(v:lnum-1))
           endif
       endif
 
-      return indent
+      return l:indent
     endif
   endfor
 
@@ -129,21 +129,21 @@ function! GetSmartyHtmlIndent(lnum)
     echom 'Line ' . a:lnum . ': using HTML indenting via ' . s:indentexprs['html']
   endif
 
-  let indent = call(substitute(s:indentexprs['html'], '(\|)', '', 'g'), [])
+  let l:indent = call(substitute(s:indentexprs['html'], '(\|)', '', 'g'), [])
 
   if g:smarty_indent_block
-      if syn ==# 'smartyStartTag' || syn ==# 'smartyMiddleTag'
+      if l:syn ==# 'smartyStartTag' || l:syn ==# 'smartyMiddleTag'
           call cursor(a:lnum -1, col('$'))
-          let pairline = searchpair('{', '', '}', 'bW')
-          if pairline > 0
-              return sw + indent(pairline)
+          let l:pairline = searchpair('{', '', '}', 'bW')
+          if l:pairline > 0
+              return l:sw + indent(l:pairline)
           endif
       endif
       " Indent if previous line is a smartyStartTag but ignore inline tags
-      if (syn ==# 'smartyStartTag' || syn ==# 'smartyMiddleTag') && !(line =~? '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
-        return sw + indent
+      if (l:syn ==# 'smartyStartTag' || l:syn ==# 'smartyMiddleTag') && !(l:line =~? '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
+        return l:sw + l:indent
       endif
   endif
 
-  return indent
+  return l:indent
 endfunction
