@@ -55,6 +55,25 @@ Execute (dot access):
 
 ############################################
 
+Given smarty (array index then text indexing):
+  {$foo.[42].textindex}
+
+Execute (array indexes):
+  AssertEqual 'smartyVariable', SyntaxOf('foo')
+  AssertEqual 'smartyVariable', SyntaxOf('textindex')
+
+###########################################
+
+Given smarty (digit then text indexing):
+  {$foo.42.textindex}
+
+Execute (array indexes):
+  AssertEqual 'smartyVariable', SyntaxOf('foo')
+  AssertEqual 'smartyVariable', SyntaxOf('42')
+  AssertEqual 'smartyVariable', SyntaxOf('textindex')
+
+###########################################
+
 Given smarty (config variables with hash and dollar):
   {#foo#}
   {#foo_bar#}

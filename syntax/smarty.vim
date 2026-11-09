@@ -243,7 +243,8 @@ syn match smartyMaybeDollarSign contained "\([^\\]\|\\\\\)\@<=\$"
 syn match smartyHashSign        contained "#"
 
 " Variable
-syn match smartyVariable        contained "\$\@<=\(\h\w\{-}\(\.\|\->\|\[\w\{-}\]\(\.\|\->\)\)\)*\w*" contains=smartyGlue nextgroup=smartyForeachProperty
+syn match smartyVariable        contained "\$\@<=\h\w*\(\(\.\|\->\)\w\+\)*" contains=smartyGlue nextgroup=smartyForeachProperty
+syn match smartyVariable        contained "\]\@<=\(\.\|\->\)\w\+" contains=smartyGlue nextgroup=smartyForeachProperty
 syn match smartyVariable        contained "#\@<=\w\+#\@="
 syn match smartyMaybeVariable   contained "\(\(^\|[^\\]\|\\\\\)\$\)\@<=\h\w*"
 syn match smartyEscapedVariable contained "\\$\h\w*"
