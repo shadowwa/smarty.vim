@@ -18,7 +18,7 @@ Given smarty (smarty condition inlined in html tag template):
       </option>
   {/if}
 
-Do (TODO: Indent the whole buffer):
+Do (Indent the whole buffer):
   gg=G
 
 Expect smarty (smarty condition inlined in html tag result):

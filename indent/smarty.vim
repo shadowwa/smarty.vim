@@ -75,6 +75,9 @@ function! GetSmartyHtmlIndent(lnum) abort
       endif
       if l:csyn ==# 'smartyStartTag'
           if l:syn ==# 'htmlTag' || l:syn ==# 'htmlScriptTag'
+              if l:line =~# '<[^>]*$'
+                  return l:sw + indent(prevnonblank(v:lnum-1))
+              endif
               let l:indent = call(substitute(s:indentexprs['html'], '(\|)', '', 'g'), [])
               return l:indent
           endif
@@ -132,16 +135,31 @@ function! GetSmartyHtmlIndent(lnum) abort
   let l:indent = call(substitute(s:indentexprs['html'], '(\|)', '', 'g'), [])
 
   if g:smarty_indent_block
-      if l:syn ==# 'smartyStartTag' || l:syn ==# 'smartyMiddleTag'
-          call cursor(a:lnum -1, col('$'))
+      if l:cline =~# '^\s*</\(\w\+\)>'
+          let l:tagname = matchstr(l:cline, '^\s*</\zs\w\+\ze>')
+          call cursor(a:lnum, match(l:cline, '\S')+1)
+          let l:pairline = searchpair('<' . l:tagname . '\>', '', '</' . l:tagname . '>', 'bW')
+          if l:pairline > 0
+              return indent(l:pairline)
+          endif
+      endif
+
+      " Indent if previous line is a smartyStartTag but ignore inline tags
+      if (l:syn ==# 'smartyStartTag' || l:syn ==# 'smartyMiddleTag') && !(l:line =~? '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
+          call cursor(a:lnum - 1, len(l:line))
           let l:pairline = searchpair('{', '', '}', 'bW')
           if l:pairline > 0
               return l:sw + indent(l:pairline)
           endif
+          return l:sw + l:indent
       endif
-      " Indent if previous line is a smartyStartTag but ignore inline tags
-      if (l:syn ==# 'smartyStartTag' || l:syn ==# 'smartyMiddleTag') && !(l:line =~? '{\([a-z]\+\)[^}]*}[^\n]*{\/\1}')
-        return l:sw + l:indent
+
+      if l:line =~# '>[^<]*$' && l:cline !~# '^\s*</'
+          call cursor(a:lnum - 1, len(l:line))
+          let l:open_tag = searchpair('<', '', '>', 'bW')
+          if l:open_tag > 0 && l:open_tag < a:lnum - 1
+              return l:sw + indent(prevnonblank(a:lnum - 1))
+          endif
       endif
   endif
 
